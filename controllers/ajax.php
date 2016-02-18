@@ -81,20 +81,39 @@ class Ajax {
                 //Para distribuir los audios en distintos servidores se pueden ir alternando aquí
                 $ruta = $audio->getArchivo(); //Le quité la ruta para reducir el consumo de ancho de banda
 
-                //'id', 'la', 'lo', 'ruta', 'positivos', 'negativos', 'categoria', 'user', 'marca', 
-                //'descripcion', 'descargas', 'fondo', 'rutas', 'idUser', 'idArea', 'nombreArea', 'limitesArea'
-                $resultado['marcadores'][] = array($audio->getIdAudio(), $audio->getLatitud(),
-                    $audio->getLongitud(), $ruta, $audio->getPuntosPositivos(), $audio->getPuntosNegativos(),
-                    $audio->getCategoria()->getIdCategoria(), $nombreUser, $audio->getMarca(),
-                    convertirURL($audio->getDescripcion()), $audio->getDescargas(),
-                    is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
-                    $idUser, (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
-                    (isset($areas[$audio->getIdArea()]) ? 
-                        array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
-                            $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
-                            $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
-                            $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
-                        array()));
+                if(post('objeto')) {
+                    $resultado['marcadores'][] = array('id' => $audio->getIdAudio(), 
+                        'la' => $audio->getLatitud(), 'lo' => $audio->getLongitud(), 'ruta' => $ruta, 
+                        'positivos' => $audio->getPuntosPositivos(), 'negativos' => $audio->getPuntosNegativos(),
+                        'categoria' => $audio->getCategoria()->getIdCategoria(), 'user' => $nombreUser, 
+                        'marca' => $audio->getMarca(), 'descripcion' => convertirURL($audio->getDescripcion()), 
+                        'descargas' => $audio->getDescargas(), 'fondo' => is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), 
+                        'rutas' => Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
+                        'idUser' => $idUser, 'idArea' => (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), 
+                        'nombreArea' => (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
+                        'limitesArea' => (isset($areas[$audio->getIdArea()]) ? 
+                            array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
+                                $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
+                                $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
+                                $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
+                            array()));
+                }
+                else {
+                    //'id', 'la', 'lo', 'ruta', 'positivos', 'negativos', 'categoria', 'user', 'marca', 
+                    //'descripcion', 'descargas', 'fondo', 'rutas', 'idUser', 'idArea', 'nombreArea', 'limitesArea'
+                    $resultado['marcadores'][] = array($audio->getIdAudio(), $audio->getLatitud(),
+                        $audio->getLongitud(), $ruta, $audio->getPuntosPositivos(), $audio->getPuntosNegativos(),
+                        $audio->getCategoria()->getIdCategoria(), $nombreUser, $audio->getMarca(),
+                        convertirURL($audio->getDescripcion()), $audio->getDescargas(),
+                        is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
+                        $idUser, (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
+                        (isset($areas[$audio->getIdArea()]) ? 
+                            array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
+                                $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
+                                $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
+                                $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
+                            array()));
+                }
             }
 
             $resultado['ok'] = TRUE;
