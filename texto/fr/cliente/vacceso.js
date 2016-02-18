@@ -1,0 +1,11 @@
+textos=new Array();
+textos['email']='Email';
+textos['usuario']='Utilisateur';
+textos['emailUsuario']="E-mail ou l'utilisateur'";
+textos['pass']='Mot de passe';
+textos['pass2']='Répétez le mot de passe';
+textos['mensaje_faltan_campos']="Vous devez remplir tous les champs de l'enregistrement";
+textos['mensaje_revisa_email']="Vérifiez l'e-mail";
+textos['mensaje_pass']='Les mots de passe ne correspondent pas';
+textos['mensaje_longitud']=' Le mot de passe doit contenir au moins 5 caractères';
+textos['confirmacion']='Acceptez-vous que votre application obtient la position la plus proche de localiser les sons?';

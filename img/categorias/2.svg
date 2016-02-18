@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 40 40"
+   enable-background="new 0 0 41 41"
+   xml:space="preserve"
+   id="svg2"
+   inkscape:version="0.48.3.1 r9886"
+   width="100%"
+   height="100%"
+   sodipodi:docname="salud-icon-color.svg"><metadata
+   id="metadata30"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs28" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="640"
+   inkscape:window-height="480"
+   id="namedview26"
+   showgrid="false"
+   fit-margin-top="0"
+   fit-margin-left="0"
+   fit-margin-right="0"
+   fit-margin-bottom="0"
+   inkscape:zoom="5.7560976"
+   inkscape:cx="19.5"
+   inkscape:cy="19"
+   inkscape:window-x="0"
+   inkscape:window-y="27"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="svg2" />
+<g
+   id="Capa_1"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="MAPA"
+   transform="translate(-1,0.5)">
+	<g
+   id="ui_x5F_buttonCircle_big_x5F_blue">
+	</g>
+</g>
+<g
+   id="BOTONES"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="SUPERIOR_BAR"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="BUSCADOR-LUPA_1_"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="Capa_4"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="categorias"
+   transform="translate(-1,0.5)">
+	<g
+   id="g12">
+		<circle
+   cx="21"
+   cy="19.5"
+   r="20"
+   id="circle14"
+   sodipodi:cx="21"
+   sodipodi:cy="19.5"
+   sodipodi:rx="20"
+   sodipodi:ry="20"
+   style="fill:#8bc34a"
+   d="m 41,19.5 c 0,11.045695 -8.954305,20 -20,20 -11.045695,0 -20,-8.954305 -20,-20 0,-11.045695 8.954305,-20 20,-20 11.045695,0 20,8.954305 20,20 z" />
+		<path
+   id="_x3C_Compound_Path_x3E__13_"
+   d="m 26.8,14.6 h -1.5 v -0.9 c 0,-1.3 -1,-2.3 -2.3,-2.3 h -4 c -1.3,0 -2.3,1 -2.3,2.3 v 0.9 h -1.5 c -1.3,0 -2.3,0.9 -2.3,2.2 v 8.6 c 0,1.3 1,2.3 2.3,2.3 h 11.6 c 1.3,0 2.3,-1 2.3,-2.3 v -8.6 c 0,-1.3 -1,-2.2 -2.3,-2.2 z m -8.9,-0.9 c 0,-0.6 0.5,-1.1 1.1,-1.1 h 4 c 0.6,0 1.1,0.5 1.1,1.1 v 0.9 h -6.2 v -0.9 z m 6.8,9 h -2.5 v 2.5 h -2.5 v -2.5 h -2.5 v -3.1 h 2.5 v -2.5 h 2.5 v 2.5 h 2.5 v 3.1 z"
+   inkscape:connector-curvature="0"
+   style="fill:#fafafa" />
+	</g>
+</g>
+<g
+   id="BUSCADOR_EXPANDIDO"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="CAPA-OSCURECIDA"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="MENU_LATERAL_IZDO"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="VENTANA-EMERGENTE-REGISTRO"
+   transform="translate(-1,0.5)">
+</g>
+<g
+   id="MENU_ANDROID_INFERIOR"
+   transform="translate(-1,0.5)">
+	<g
+   id="ui_x5F_button_x5F_raised_2">
+	</g>
+	<g
+   id="ui_x5F_dialog_x5F_light_2">
+	</g>
+	<g
+   id="ic_x5F_radioButtonOn_x5F_color_x0D_">
+	</g>
+	<g
+   id="ui_x5F_searchField_x5F_inset_x5F_light">
+	</g>
+</g>
+</svg>

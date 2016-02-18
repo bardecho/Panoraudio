@@ -1,0 +1,12 @@
+User-agent: *
+Disallow: /clases
+Disallow: /controllers
+Disallow: /log
+Disallow: /model
+Disallow: /templates
+Disallow: /utils
+Disallow: /views
+Disallow: /panoraudioWeb/clases
+Disallow: /panoraudioWeb/partes
+Disallow: /panoraudioWeb/textos
+Disallow: /panoraudioWeb/utils

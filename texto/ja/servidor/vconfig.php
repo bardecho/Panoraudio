@@ -1,0 +1,11 @@
+<?php
+$GLOBALS['textos']['idiomaAplicacion']='応用言語';
+$GLOBALS['textos']['idiomaAudios']='音声の言語';
+$GLOBALS['textos']['cualquiera']='任意の';
+$GLOBALS['textos']['porPuntuacion']='オーディオの最小スコア';
+$GLOBALS['textos']['aceptar']='受け入れる';
+$GLOBALS['textos']['cancelar']='キャンセル';
+$GLOBALS['textos']['noSeleccion']='選択されていない';
+$GLOBALS['textos']['seleccion']='選択';
+$GLOBALS['textos']['arrastrar']='したいカテゴリを選択してください';
+$GLOBALS['textos']['guardada']='設定が正常に保存されています。';

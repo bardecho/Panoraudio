@@ -1,0 +1,12 @@
+textos=new Array();
+textos['email']='Email';
+textos['usuario']='User';
+textos['emailUsuario']='Email or User';
+textos['pass']='Password';
+textos['pass2']='Repeat the password';
+textos['mensaje_faltan_campos']='You must fill in all fields of the record';
+textos['mensaje_revisa_email']='Check the email';
+textos['mensaje_pass']='Passwords do not match';
+textos['mensaje_longitud']='The password must contain at least 5 characters';
+textos['mensaje_registrado']='You have successfully registered. Now check your email to finish the process';
+textos['confirmacion']='Do you accept that your application gets the position closest to locate sounds?';

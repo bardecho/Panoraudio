@@ -1,0 +1,19 @@
+<?php
+$GLOBALS['textos']['registro_titulo']='Izena eman';
+$GLOBALS['textos']['email']='Email';
+$GLOBALS['textos']['usuario']='Erabiltzaile';
+$GLOBALS['textos']['emailUsuario']='E-posta edo Username';
+$GLOBALS['textos']['pass']='Pasahitza';
+$GLOBALS['textos']['pass2']='Errepikatu pasahitza';
+$GLOBALS['textos']['login_titulo']='Saioa hasi';
+$GLOBALS['textos']['registrar']='Izena eman';
+$GLOBALS['textos']['entrar']='Sartu';
+$GLOBALS['textos']['recordar']='Gogoratu sartzeko';
+$GLOBALS['textos']['acuerdo']='Lizentzia-kontratua';
+$GLOBALS['textos']['mensaje_registrado']='Arrakastaz duzun. Orain, egiaztatu zure posta elektroniko prozesua osatzeko.Maiatzaren da spam gisa gordetzen dira.';
+$GLOBALS['textos']['manual']='';
+$GLOBALS['textos']['contacta']='Harremanetan jarri';
+$GLOBALS['textos']['mensaje_activado']='Zure kontua gaitua izan da. Orain saiatu sartzeko.';
+$GLOBALS['textos']['recuperar']='pasahitza berreskuratu';
+$GLOBALS['textos']['recuperarEmail']='Prozesua bukatu. Check your email bestelako informazioa jasotzeko.';
+$GLOBALS['textos']['cambiadoPass']='Pasahitzak aldatu egin da.';

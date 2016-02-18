@@ -1,0 +1,23 @@
+Array
+(
+    [0] => Categoria Object
+        (
+            [idCategoria:Categoria:private] => 3
+            [categoria:Categoria:private] => 
+        )
+
+    [1] => Categoria Object
+        (
+            [idCategoria:Categoria:private] => 5
+            [categoria:Categoria:private] => 
+        )
+
+)
+
+Array
+(
+    [0] => 3
+    [1] => 5
+)
+
+a:2:{i:0;i:3;i:1;i:5;}

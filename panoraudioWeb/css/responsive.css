@@ -1,0 +1,80 @@
+/***** SMARTPHONES *****/
+
+@media all and (max-width: 767px){
+
+	.mobile-toggle{ display: block; cursor: pointer; font-size: 40px; top: 15px; color: #444; z-index: 200; }
+	.menu{ margin: 0px; }
+	.menu li{ float: none; margin: 0px 0px 11px 0px; }
+	#navigation{ position: fixed !important; background: #rgba(255,255,255,0.9) !important; top: 0px; padding-top: 73px; max-height: 50px;  }
+	#navigation .text-center{ text-align: left !important; }
+	#logo{ display: none; }
+	.headline{ margin-bottom: 11px; }
+	.headline-logo{ display: none; }
+	.content-divider{ display: none; }
+	#stats{ display: none; }
+	#clients{ display: none; }
+	#blog{ display: none; }
+	.stat{ margin-bottom: 22px; }
+	.slide-content{ padding-top: 150px !important; }
+	.title-upper{ display: none; }
+	.title-icon{ display: none; }
+	
+	.bg-cover{ background-attachment: scroll !important; }
+	
+	.page-title h1{ font-size: 48px; }
+	
+	
+	.process-phase{ text-align: center; }
+	.phase-icon{ margin: 0px 0px 22px 0px; display: inline-block; float: none !important; }
+	.phase-text{ float: none; min-width: 100%; }
+		
+	.project-slider{ margin-bottom: 22px; }
+	.filters li{ margin-right: 11px; }
+	
+	#home-slider .slides li h1{ font-size: 68px; letter-spacing: 0px; right: 0px; }
+	#home-slider .slides li p{ font-size: 1em; }
+	#home-slider .slides li .btn{ display: none; }
+	#home-slider .slides li{ background-size: cover !important; }
+	
+	.testimonials-slider h1{ font-size: 38px; }
+	
+	.pricing-table{ margin-bottom: 44px; }
+
+}
+
+
+/***** TABLETS PORTRAIT & LANDSCAPE *****/
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+
+	#home-slider .slides li{ background-size: cover !important; }
+	.bg-cover{ background-attachment: scroll !important; }
+	.post-single-footer{ background-attachment: scroll !important; }
+
+}
+
+
+/***** PORTRAIT TABLETS *****/
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+
+	.project{ width: 50%; }
+	.headline { font-size: 130px; letter-spacing: 20px; }
+	.process-phase{ text-align: center; }
+	.phase-icon{ margin: 0px 0px 22px 0px; display: inline-block; float: none !important; }
+	.phase-text{ float: none; min-width: 100%; }
+
+	#blog-preview-holder .post-link .medium-6{ width: 100% !important; }
+
+}
+
+/** ADDITIONAL FEATURES **/
+
+@media all and (max-width: 1250px){
+  .post-preview h2{ font-size: 24px; }
+}

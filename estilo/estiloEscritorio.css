@@ -1,0 +1,367 @@
+/**** Específico escritorio ****/
+html, body, #contenedor {
+    width: 100%;
+    min-width: 955px;
+    min-height: 355px;
+}
+
+#cabecera {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#cabecera img {
+    margin: 0 10px 0 0;
+    width: auto;
+    height: 35px;
+    vertical-align: text-bottom;
+    cursor: pointer;
+}
+
+#cabecera #botonIdioma {
+    height: 28px;
+    margin: 5px 10px 5px 0;
+}
+
+#cabecera #eslogan {
+    display: inline-block;
+    margin-right: 10px;
+    width: 140px;
+    color: white;
+}
+
+#cabecera .busqueda {
+    margin: 0 10px 0 0;
+    vertical-align: text-bottom;
+}
+
+#cabecera .boton {
+    vertical-align: text-bottom;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+#botonAcceso {
+    display: inline-block;
+    margin: 0 20px 11px 0;
+    vertical-align: text-bottom;
+    color: white;
+    cursor: pointer;
+    position: relative;
+}
+
+#botonRegistro {
+    position: relative;
+}
+
+#contacto {
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#contacto img {
+    height: 15px;
+    margin: 0;
+}
+
+#contacto p {
+    font-size: 12px;
+    color: white;
+}
+
+#categorias {
+    width: 515px;
+}
+
+#categorias li {
+    margin-left: 4px; 
+    margin-right: 4px; 
+    width: 65px;
+}
+
+#categorias li p {
+    font-size: 10px;
+}
+
+#cabecera .padreVentanaIdioma {
+    position: absolute;
+    z-index: 1000;
+    margin-top: 10px;
+}
+
+#cabecera .padreVentanaIdioma .cerrar {
+    height: 10px;
+    margin: 0;
+}
+
+#cabecera .padreVentanaIdioma .flechaSuperior {
+    height: 14px;
+    left: 58px;
+    margin: 0;
+    position: absolute;
+    top: -14px;
+    width: 20px;
+}
+
+#cabecera .ventanaIdioma {
+    background-color: #fafafa;
+    box-shadow: 0 1px 2px #000000;
+    padding: 10px;
+    text-align: center;
+    width: 221px;
+}
+
+#cabecera .ventanaIdioma p {
+    margin-bottom: 3px;
+    text-align: left;
+}
+
+#cabecera .ventanaIdioma img {
+    width: 50px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/*** Vista previa ***/
+#marcoVistaPrevia {
+    position: absolute;
+    top: 75px;
+    left: 35px;
+    width: 40%;
+    height: 75%;
+    z-index: 1001;
+    background-color: #1875D1;
+    opacity: 0.85;
+    box-shadow: 0 6px 12px #000000;
+    z-index: 1002;
+}
+
+[id |= imagenPrevia] {
+    float: left;
+    width: 30%;
+    height: 30%;
+    margin-left: 2%;
+    margin-top: 2%;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+}
+
+[id |= imagenPrevia] .play {
+    display: block;
+    height: 40%;
+    margin: 0 auto;
+    position: relative;
+    top: 30%;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+/** Marca aleatoria **/
+.ventanaAleatoria {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    z-index: 1001;
+    background-color: #fafafa;
+    font-family: "roboto-r";
+    padding: 20px 28px;
+    text-align: left;
+    overflow: auto;
+    visibility: hidden;
+    box-shadow: 0 6px 12px #000000;
+}
+
+.ventanaAleatoria #imagen {
+    width: 100%;
+    overflow: hidden;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ventanaAleatoria #play {
+    margin-right: 1%;
+    width: 10%;
+    display: inline-block;
+}
+
+.ventanaAleatoria #play img {
+    width: 100%;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.ventanaAleatoria #desplazamiento {
+    margin: 10px 0 0 0;
+}
+
+.ventanaAleatoria #desplazamiento p {
+    font-size: 12px;
+    float: right;
+}
+
+.ventanaAleatoria #lineaTiempo {
+    background-color: #9D9D9D;
+    width: 89%;
+    display: inline-block;
+}
+
+.ventanaAleatoria #lineaTiempo div {
+    background-color: #00ABC0;
+    font-size: 12px;
+}
+
+#iniciar {
+    box-shadow: 0 6px 12px #000000;
+    z-index: 1002;
+    background-color: #FAFAFA;
+    border: 1px solid #414141;
+    position: absolute;
+    right: 20px;
+    z-index: 1002;
+    padding: 20px;
+    top: 85px; 
+    width: 268px; 
+    height: 55px;
+}
+
+#botoniniciar{
+    position:relative;
+    display: center;
+    margin: 0 auto;
+    left: 108px; 
+    padding-top: 4px; 
+    padding-bottom: 4px;
+    top: 6px;
+}
+
+#iniciarIntro{
+    font-weight: Georgia,​Times,​serif;
+    text-align:center;
+}
+
+#iniciar2 {
+    box-shadow: 0 6px 12px #000000;
+    z-index: 1002;
+    background-color: #FAFAFA;
+    border: 1px solid #414141;
+    position: absolute;
+    right: 20px;
+    padding: 20px;
+    top: 215px;
+    width: 268px;
+}
+
+#autor{   
+    font-family: 'Lobster', cursive;
+    color:#00ABC0;
+}
+
+#description{
+    border-top: 1px solid #bbb;
+    font-weight: normal;
+}
+
+
+/** Slider **/
+#slider {
+    bottom: 10px;
+    position: absolute;
+    z-index: 1000;
+}
+
+#ventanaSlider {
+    overflow: hidden;
+    width: 810px;
+}
+
+#contenedorSlider {
+    position: relative;
+}
+
+#contenedorPrincipalSlider > * {
+    float: left;
+}
+
+#contenedorPrincipalSlider > img {
+    margin-top: 11%;
+    cursor: pointer;
+}
+
+#contenedorPrincipalSlider .play {
+    width: 32px;
+    cursor: pointer;
+}
+
+#contenedorPrincipalSlider .desplazamientoElementoSlider {
+    padding: 0 15px;
+    width: 200px;
+    height: 40px;
+}
+
+#contenedorPrincipalSlider .desplazamientoElementoSlider p {
+    font-size: 12px;
+    float: right;
+    margin-top: 2px;
+    color: white;
+}
+
+#contenedorPrincipalSlider .desplazamientoElementoSlider > div {
+    float: left;
+}
+
+#contenedorPrincipalSlider .lineaTiempoElementoSlider {
+    width: 164px;
+    background-color: #9D9D9D;
+    height: 5px;
+    margin-top: 13px;
+    margin-left: 4px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+#contenedorPrincipalSlider .lineaTiempoElementoSlider div {
+    background-color: #00abc0;
+}
+
+.elementoSlider {
+    float: left;
+    margin: 0 20px;
+    border: 1px solid #00abc0;
+}
+
+.imagenElementoSlider {
+    width: 200px;
+    height: 180px;
+    padding: 15px 15px 10px 15px;
+}
+
+.imagenElementoSlider div {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#ventanaInicio {
+    background-color: transparent; 
+    border: 1px solid white;
+    width: 260px;
+}
+
+#ventanaInicio p {
+    margin-bottom: 20px;
+}
+
+#ventanaInicio h1 {
+    margin-bottom: 30px;
+    font-family: "roboto-m";
+    font-size: 21px;
+    color: white;
+}
+
+#ventanaInicio .boton {
+    width: 75%;
+}

@@ -1,0 +1,11 @@
+<?php
+$GLOBALS['textos']['idiomaAplicacion']='應用程序語言';
+$GLOBALS['textos']['idiomaAudios']='音頻語言';
+$GLOBALS['textos']['cualquiera']='任何';
+$GLOBALS['textos']['porPuntuacion']='用於音頻的最低得分';
+$GLOBALS['textos']['aceptar']='接受';
+$GLOBALS['textos']['cancelar']='取消';
+$GLOBALS['textos']['noSeleccion']='未選定';
+$GLOBALS['textos']['seleccion']='選';
+$GLOBALS['textos']['arrastrar']='選擇你想要的分類';
+$GLOBALS['textos']['guardada']='已經成功保存配置。';

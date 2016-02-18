@@ -1,0 +1,12 @@
+<?php
+$GLOBALS['idiomaAudio'][0]='任何';
+$GLOBALS['categorias'][1]='摄影';
+$GLOBALS['categorias'][2]='衛生與健康';
+$GLOBALS['categorias'][3]='購物';
+$GLOBALS['categorias'][4]='閒暇';
+$GLOBALS['categorias'][5]='餐廳';
+$GLOBALS['categorias'][6]='活動';
+$GLOBALS['categorias'][7]='住宿';
+$GLOBALS['categorias'][8]='運輸';
+$GLOBALS['categorias'][9]='看到什麼';
+$GLOBALS['categorias'][10]='文化';

@@ -1,0 +1,19 @@
+<?php
+$GLOBALS['textos']['registro_titulo']='Registrieren';
+$GLOBALS['textos']['email']='E-Mail';
+$GLOBALS['textos']['usuario']='Benutzer';
+$GLOBALS['textos']['emailUsuario']='Email oder Benutzername';
+$GLOBALS['textos']['pass']='Kennwort';
+$GLOBALS['textos']['pass2']='Wiederholen Sie das Passwort';
+$GLOBALS['textos']['login_titulo']='Login';
+$GLOBALS['textos']['registrar']='Registrieren';
+$GLOBALS['textos']['entrar']='Eingeben';
+$GLOBALS['textos']['recordar']='Angemeldet zugreifen';
+$GLOBALS['textos']['acuerdo']='Lizenzvereinbarung';
+$GLOBALS['textos']['mensaje_registrado']='Sie haben erfolgreich. Überprüfen Sie nun Ihre E-Mail um den Vorgang abzuschließen.May wird als SPAM gespeichert.';
+$GLOBALS['textos']['manual']='';
+$GLOBALS['textos']['contacta']='Kontakt';
+$GLOBALS['textos']['mensaje_activado']='Ihr Konto wurde aktiviert. Nun versuchen zu erreichen.';
+$GLOBALS['textos']['recuperar']='Passwort wiederherstellen';
+$GLOBALS['textos']['recuperarEmail']='Prozess abgeschlossen. Überprüfen Sie Ihre E-Mail für weitere Anweisungen.';
+$GLOBALS['textos']['cambiadoPass']='Das Passwort wurde erfolgreich geändert.';

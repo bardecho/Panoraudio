@@ -1,0 +1,19 @@
+<?php
+$GLOBALS['textos']['registro_titulo']='Rexistrarse';
+$GLOBALS['textos']['email']='Email';
+$GLOBALS['textos']['usuario']='Usuario';
+$GLOBALS['textos']['emailUsuario']='Correo-e ou nome de usuario';
+$GLOBALS['textos']['pass']='Contrasinal';
+$GLOBALS['textos']['pass2']='Repita o contrasinal';
+$GLOBALS['textos']['login_titulo']='Iniciar';
+$GLOBALS['textos']['registrar']='Rexistrarse';
+$GLOBALS['textos']['entrar']='Entrar';
+$GLOBALS['textos']['recordar']='Lembre-se de acceder';
+$GLOBALS['textos']['acuerdo']='Contrato de Licenza';
+$GLOBALS['textos']['mensaje_registrado']='Vostede ten éxito. Agora, comproba o teu correo para completar o proceso.Maio está a ser almacenado como SPAM.';
+$GLOBALS['textos']['manual']='';
+$GLOBALS['textos']['contacta']='Contacta';
+$GLOBALS['textos']['mensaje_activado']='A súa conta foi activada. Agora tente acceder.';
+$GLOBALS['textos']['recuperar']='Solicitar un novo contrasinal';
+$GLOBALS['textos']['recuperarEmail']='Proceso completado. Comprobe o seu correo electrónico para obter máis instrucións.';
+$GLOBALS['textos']['cambiadoPass']='O contrasinal foi modificado con éxito.';
