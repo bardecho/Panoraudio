@@ -9,3 +9,5 @@ textos['mensaje_revisa_email']='Comprobe o correo-e';
 textos['mensaje_pass']='Os contrasinais non coinciden';
 textos['mensaje_longitud']='± O contrasinal debe conter polo menos 5 caracteres';
 textos['confirmacion']='Vostede acepta que o seu programa obtén a posición máis próxima para atopar sons?';
+textos['borrarCuenta']='Eliminar a conta';
+textos['confirmaBorrarCuenta']='¿Seguro? Todo o seu audios serán eliminados.';

@@ -452,7 +452,7 @@ function abrirMenuPerfil() {
     $('#contenedorMapa').append(
         '<div class="ventanaUsuario">' +
             '<div>' +
-                '<p>' + textos['hola'] + ' <span class="azul">' + nombreUsuario +'</span></p>' +
+                '<p>' + textos['hola'] + ' <span class="azul">' + nombreUsuario +'</span> <img id="borrarCuenta" src="' + base_url_img + 'img/perfil-delete.png" alt="' + textos['borrarCuenta'] + '" title="' + textos['borrarCuenta'] + '"/></p>' +
             '</div>'+
             '<div>'+
                 '<p>' + textos['cambiarPass'] + ':</p>'+
@@ -483,6 +483,11 @@ function abrirMenuPerfil() {
         }
     });
     $('#botonSalir').click(cerrarSesion);
+    $('#borrarCuenta').click(function() {
+        if(confirm(textos['confirmaBorrarCuenta'])) {
+            location.assign(base_url + "index.php/acceso/eliminarCuenta");
+        }
+    });
 }
 
 /**

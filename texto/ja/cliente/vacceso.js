@@ -9,3 +9,5 @@ textos['mensaje_revisa_email']='メールをチェックします。';
 textos['mensaje_pass']='パスワードが一致しません。';
 textos['mensaje_longitud']='パスワードは少なくとも5文字を含める必要があります。';
 textos['confirmacion']='近くオーディオを見つけるためにあなたの位置を取得するためのアプリを受け入れるのですか？';
+textos['borrarCuenta']='アカウントを削除';
+textos['confirmaBorrarCuenta']='本当に？すべてのオーディオが削除されます。';

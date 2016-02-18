@@ -9,3 +9,5 @@ textos['mensaje_revisa_email']="Vérifiez l'e-mail";
 textos['mensaje_pass']='Les mots de passe ne correspondent pas';
 textos['mensaje_longitud']=' Le mot de passe doit contenir au moins 5 caractères';
 textos['confirmacion']='Acceptez-vous que votre application obtient la position la plus proche de localiser les sons?';
+textos['borrarCuenta']='Supprimer le compte';
+textos['confirmaBorrarCuenta']='Tu es sûr? Toute votre audio sera supprimé.';

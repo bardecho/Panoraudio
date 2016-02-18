@@ -10,3 +10,5 @@ textos['mensaje_pass']='Passwords do not match';
 textos['mensaje_longitud']='The password must contain at least 5 characters';
 textos['mensaje_registrado']='You have successfully registered. Now check your email to finish the process';
 textos['confirmacion']='Do you accept that your application gets the position closest to locate sounds?';
+textos['borrarCuenta']='Delete account';
+textos['confirmaBorrarCuenta']='Are you sure? All your audio will be deleted.';

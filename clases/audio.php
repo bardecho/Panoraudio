@@ -617,6 +617,22 @@ class Audio {
     }
     
     /**
+     * Borra el audio de la base de datos y del disco, incluidas fotos.
+     * @return boolean
+     */
+    public function borradoCompleto() {
+        $resultado = FALSE;
+        
+        if(self::borrar($this->idAudio)) {
+            unlink('img/fondos/'.$this->idAudio.'.jpg');
+            unlink('img/fondos/'.$this->idAudio.'_mini.jpg');
+            $resultado = unlink('sonido/'.$this->getArchivo());
+        }
+        
+        return $resultado;
+    }
+    
+    /**
      * Marca un audio como inapropiado.
      * @param int $idAudio El id del audio a marcar.
      * @param int $tipoDenuncia 

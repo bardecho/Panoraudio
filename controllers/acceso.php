@@ -4,6 +4,8 @@ require_once 'utils/limitimagesize_helper.php';
 require_once 'clases/preferencia.php';
 require_once 'clases/idiomaaudio.php';
 require_once 'clases/categoria.php';
+require_once 'clases/audio.php';
+require_once 'clases/puntuacion.php';
 require_once 'clases/facebook/facebook.php';
 cargarFrases('vacceso');
 
@@ -197,5 +199,23 @@ class Acceso {
         
         echo 'ok';
         exit;
+    }
+    
+    public function eliminarCuenta() {
+        $user = comprobarLogin();
+        if ($user) {
+            //Borramos los audios
+            $audios = Audio::cargarPorUsuario($user->getIdUser());
+            foreach($audios as $audio) {
+                $audio->borradoCompleto();
+            }
+            
+            //Borramos el usuario
+            unlink('img/fotosPerfil/'.$user->getIdUser().'.jpg');
+            $user->remove();
+        }
+
+        //Cerramos sesión
+        $this->salir();
     }
 }

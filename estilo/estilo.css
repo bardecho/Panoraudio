@@ -1324,3 +1324,11 @@ html, body, #contenedor {
 #flecha-ayuda-4 img {
     vertical-align: middle;
 }
+
+#borrarCuenta {
+    cursor: pointer;
+    height: 25px;
+    margin-left: 10px;
+    vertical-align: bottom;
+    width: 25px;
+}

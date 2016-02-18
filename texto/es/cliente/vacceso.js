@@ -11,3 +11,5 @@ textos['mensaje_revisa_email']='Revisa el email.';
 textos['mensaje_pass']='Las contraseñas no coinciden.';
 textos['mensaje_longitud']='La contraseña debe contener al menos 5 caracteres.';
 textos['confirmacion']='¿Aceptas que la aplicación obtenga tu posición para localizar los audios cercanos?';
+textos['borrarCuenta']='Borrar cuenta';
+textos['confirmaBorrarCuenta']='¿Estás seguro? Todos tus audios serán borrados.';

@@ -9,13 +9,5 @@ textos['mensaje_revisa_email']='Verifique o e-mail';
 textos['mensaje_pass']='As senhas não coincidem';
 textos['mensaje_longitud']='A senha deve ter pelo menos 5 caracteres';
 textos['confirmacion']='Você aceita o pedido para obter a sua posição para localizar áudios nas proximidades?';
-
-
-
-
-
-
-
-
-
-
+textos['borrarCuenta']='Excluir a conta';
+textos['confirmaBorrarCuenta']='Tem certeza? Todo o seu áudio serão apagados.';
