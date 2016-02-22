@@ -778,7 +778,9 @@ class Audio {
                     //Delimitamos por categoría
                     foreach($categorias as $categoria) {
                         $idCategoria = (int)$categoria->getIdCategoria();
-                        $limitesCat .= "$idCategoria,";
+                        if($idCategoria) {
+                            $limitesCat .= "$idCategoria,";
+                        }
                     }
                     
                     if($limitesCat) {
