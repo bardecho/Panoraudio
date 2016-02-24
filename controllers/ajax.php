@@ -119,7 +119,7 @@ class Ajax {
             $resultado['ok'] = TRUE;
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (get('callback') ? get('callback') . '(' . json_encode($resultado) . ')' : json_encode($resultado));
     }
     
     public function subirFotoPerfil() {
