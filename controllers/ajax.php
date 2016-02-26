@@ -46,6 +46,15 @@ class Ajax {
         
         //Devolvemos todos los audios de las categorías
         $categorias = Categoria::listar();
+        //Sobreescribimos el idioma si llega por post
+        if(post('idioma') !== FALSE) {
+            if (!post('idioma')) {
+                $idiomasAudio = array(new IdiomaAudio(0, '', ''));
+            }
+            else {
+                $idiomasAudio = array(IdiomaAudio::cargar(post('idioma')));
+            }
+        }
         
         if(post('idArea')) {
             //Por área
