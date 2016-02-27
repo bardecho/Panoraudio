@@ -27,6 +27,9 @@ class Ajax {
 
     public function obtenerAudios() {
         $resultado['ok'] = FALSE;
+        
+        $_POST['idioma']=0;
+        $_POST['idZona']='ChIJk8GyYRRiLw0Rn9RLF60dRHs';
 
         $idiomasAudio = array(cargarIdiomaAudio()); //Este sistema tiene preferencia sobre el de la bd
         $user = comprobarLogin();
@@ -55,7 +58,7 @@ class Ajax {
                 $idiomasAudio = array(IdiomaAudio::cargar(post('idioma')));
             }
         }
-        
+ 
         if(post('idArea')) {
             //Por área
             $audios = Audio::buscarPorIdZona($idiomasAudio[0], post('idArea'), 0, $categorias['categorias'], FALSE);

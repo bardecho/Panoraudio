@@ -852,8 +852,16 @@ class Audio {
                 $lonInfIzq = (float)$lonInfIzq;
                 $cantidad = (int)$cantidad;
                 $cantidadString = ($cantidad > 0 ? "limit $cantidad" : '');
+                
+                if($idiomaAudio->getIdIdiomaAudio() == 0) {
+                    //Está seleccionada la opción cualquiera
+                    $idIdiomaAudio = '';
+                }
+                else {
+                    $idIdiomaAudio = "and idIdiomaAudio = '{$idiomaAudio->getIdIdiomaAudio()}'";
+                }
 
-                $datos=$db->obtainData("select * from at_audio where idIdiomaAudio = '{$idiomaAudio->getIdIdiomaAudio()}' and bloqueado = 0 and marca = 0 and latitud <= '$latSupDer' and longitud <= '$lonSupDer' and latitud >= '$latInfIzq' and longitud >= '$lonInfIzq' $limitesCat order by rand() $cantidadString");
+                $datos=$db->obtainData("select * from at_audio where 1=1 $idIdiomaAudio and bloqueado = 0 and marca = 0 and latitud <= '$latSupDer' and longitud <= '$lonSupDer' and latitud >= '$latInfIzq' and longitud >= '$lonInfIzq' $limitesCat order by rand() $cantidadString");
                 if($datos['rows'] > 0) {
                     //Obtenemos las categorías y los idiomasAudio
                     $categoriasOrdenadas=Categoria::listar(TRUE);
@@ -922,7 +930,15 @@ class Audio {
                 $cantidad = (int)$cantidad;
                 $cantidadString = ($cantidad > 0 ? "limit $cantidad" : '');
                 
-                $datos=$db->obtainData("select * from at_audio where idIdiomaAudio = '{$idiomaAudio->getIdIdiomaAudio()}' and bloqueado = 0 and marca = 0 and idArea = '$idArea[0]' $limitesCat order by rand() $cantidadString");
+                if($idiomaAudio->getIdIdiomaAudio() == 0) {
+                    //Está seleccionada la opción cualquiera
+                    $idIdiomaAudio = '';
+                }
+                else {
+                    $idIdiomaAudio = "and idIdiomaAudio = '{$idiomaAudio->getIdIdiomaAudio()}'";
+                }
+                
+                $datos=$db->obtainData("select * from at_audio where 1=1 $idIdiomaAudio and bloqueado = 0 and marca = 0 and idArea = '$idArea[0]' $limitesCat order by rand() $cantidadString");
                 if($datos['rows'] > 0) {
                     //Obtenemos las categorías y los idiomasAudio
                     $categoriasOrdenadas=Categoria::listar(TRUE);
