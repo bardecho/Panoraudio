@@ -172,15 +172,21 @@ class Ajax {
                         $nombreUser = '';
                     }
 
-                    //'idUsuario', 'usuario', 'comentario'
-                    $resultado['comentarios'][] = array($idUser, $nombreUser, $comentario->getTexto());
+                    if(post('objeto')) {
+                        $resultado['comentarios'][] = array('idUsuario' => $idUser, 
+                            'nombreUsuario' => $nombreUser, 'texto' => $comentario->getTexto());
+                    }
+                    else {
+                        //'idUsuario', 'usuario', 'comentario'
+                        $resultado['comentarios'][] = array($idUser, $nombreUser, $comentario->getTexto());
+                    }
                 }
 
                 $resultado['ok'] = TRUE;
             }
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
     
     public function guardarComentario($idAudio, $texto) {
@@ -793,5 +799,37 @@ class Ajax {
         }
         
         echo get('callback') . '(' . json_encode($resultado) . ')';
+    }
+    
+    public function obtenerInfoUsuario($idUsuario) {
+        $resultado['ok'] = TRUE;
+        $resultado['datos'] = array();
+        
+        if($idUsuario) {
+            $audios = Audio::cargarPorUsuario($idUsuario);
+            $cantidadComentarios = Comentario::contarComentarios($idUsuario);
+            if($audios) {
+                foreach($audios as $audio) {
+                    //Deben tener imagen
+                    if(is_file("img/fondos/{$audio->getIdAudio()}.jpg")) {
+                        $resultado['datos']['audios'][] = array('idAudio' => $audio->getIdAudio(), 'puntosPositivos' => $audio->getPuntosPositivos(), 
+                                'cantidadComentarios' => (isset($cantidadComentarios[$audio->getIdAudio()]) ? $cantidadComentarios[$audio->getIdAudio()] : 0));
+                    }
+                }
+            }
+            $consulta = User::cargarPreparada();
+            $usuario = User::ejecutarPreparada($consulta, $idUsuario);
+            if($usuario) {
+                $resultado['datos']['nombre'] = $usuario->getUsuario();
+            }
+            else {
+                $resultado['datos']['nombre'] = '';
+            }
+        }
+        else {
+            $resultado['ok'] = FALSE;
+        }
+        
+        echo json_encode($resultado);
     }
 }
