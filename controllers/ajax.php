@@ -812,8 +812,18 @@ class Ajax {
                 foreach($audios as $audio) {
                     //Deben tener imagen
                     if(is_file("img/fondos/{$audio->getIdAudio()}.jpg")) {
+                        $comentarios = Comentario::cargarPorAudio($audio->getIdAudio());
+                        $comentariosFormateados = array();
+                        if($comentarios) {
+                            foreach($comentarios as $comentario) {
+                                $comentariosFormateados[] = array('idComentario' => $comentario->getIdComentario(), 
+                                    'idUsuario' => $comentario->getIdUser(), 'texto' => $comentario->getTexto());
+                            }
+                        }
+                        
                         $resultado['datos']['audios'][] = array('idAudio' => $audio->getIdAudio(), 'puntosPositivos' => $audio->getPuntosPositivos(), 
-                                'cantidadComentarios' => (isset($cantidadComentarios[$audio->getIdAudio()]) ? $cantidadComentarios[$audio->getIdAudio()] : 0));
+                                'cantidadComentarios' => (isset($cantidadComentarios[$audio->getIdAudio()]) ? $cantidadComentarios[$audio->getIdAudio()] : 0),
+                                'archivo' => $audio->getArchivo(), 'comentarios' => $comentariosFormateados);
                     }
                 }
             }

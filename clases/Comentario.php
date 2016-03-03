@@ -68,7 +68,7 @@ class Comentario {
     /**
      * Obtiene los comentarios para un audio.
      * @param int $idAudio
-     * @return array
+     * @return Comentario[]
      */
     public static function cargarPorAudio($idAudio) {
         $resultado=FALSE;        
