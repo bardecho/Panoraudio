@@ -842,4 +842,80 @@ class Ajax {
         
         echo json_encode($resultado);
     }
+    
+    public function obtenerInformacionZona() {
+        $resultado['ok'] = FALSE;
+
+        //Devolvemos los audios de todas las categorías
+        $categorias = Categoria::listar();
+        //Obtenemos el idioma
+        if ((int)post('idIdioma')) {
+            $idiomaAudio = IdiomaAudio::cargar((int)post('idIdioma'));
+        }
+        else {
+            $idiomaAudio = new IdiomaAudio(0, '', '');
+        }
+ 
+        if(post('idArea')) {
+            //Por área
+            $audios = Audio::buscarPorIdZona($idiomaAudio, post('idArea'), 0, $categorias['categorias'], FALSE);
+        }
+        elseif(post('latSupDer') !== FALSE && post('lonSupDer') !== FALSE && post('latInfIzq') !== FALSE && post('lonInfIzq') !== FALSE) {
+            //Por coordenadas
+            $audios = Audio::buscarPorZona($idiomaAudio, (float)post('latSupDer'), (float)post('lonSupDer'), 
+                    (float)post('latInfIzq'), (float)post('lonInfIzq'), 0, $categorias['categorias'], FALSE);
+        }
+        else {
+            //Todos
+            $audios = Audio::listar($categorias['categorias'], array(), 0);
+        }
+
+        if ($audios) {
+            //Cargamos las areas
+            $areas = Area::listar(TRUE);
+            //Y los ids de ruta
+            $BDPreparadaRutas = Ruta::cargarPreparada();
+            //Usuarios
+            $usuarios = User::listar(true);
+            foreach($usuarios['usuarios'] as $usuario) {
+                $resultado['usuarios'][] = array('idUsuario' => $usuario->getIdUser(), 
+                    'email' => $usuario->getEmail(), 'idFacebook' => $usuario->getIdFacebook(), 
+                    'usuario' => $usuario->getUsuario());
+            }
+            
+            foreach ($audios as $audio) {
+                //Para distribuir los audios en distintos servidores se pueden ir alternando aquí
+                $ruta = $audio->getArchivo(); //Le quité la ruta para reducir el consumo de ancho de banda
+                
+                $comentarios = Comentario::cargarPorAudio($audio->getIdAudio());
+                $comentariosFormateados = array();
+                if($comentarios) {
+                    foreach($comentarios as $comentario) {
+                        $comentariosFormateados[] = array('idComentario' => $comentario->getIdComentario(), 
+                            'idUsuario' => $comentario->getIdUser(), 'texto' => $comentario->getTexto());
+                    }
+                }
+
+                $resultado['marcadores'][] = array('id' => $audio->getIdAudio(), 
+                    'la' => $audio->getLatitud(), 'lo' => $audio->getLongitud(), 'ruta' => $ruta, 
+                    'positivos' => $audio->getPuntosPositivos(), 'negativos' => $audio->getPuntosNegativos(),
+                    'categoria' => $audio->getCategoria()->getIdCategoria(), 
+                    'marca' => $audio->getMarca(), 'descripcion' => convertirURL($audio->getDescripcion()), 
+                    'descargas' => $audio->getDescargas(), 'fondo' => is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), 
+                    'rutas' => Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
+                    'idUser' => $audio->getIdUser(), 'idArea' => (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), 
+                    'nombreArea' => (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
+                    'limitesArea' => (isset($areas[$audio->getIdArea()]) ? 
+                        array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
+                            $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
+                            $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
+                            $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
+                        array()), 'comentarios' => $comentariosFormateados);
+            }
+
+            $resultado['ok'] = TRUE;
+        }
+
+        echo json_encode($resultado);
+    }
 }

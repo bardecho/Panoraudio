@@ -473,7 +473,10 @@ class Audio {
         }
         if($idCat) $idCat=substr($idCat, 0, -2).')';
         //Ahora los idiomaAudio
-        $idIdiomaAudio='and idIdiomaAudio in (';
+        if($idiomasAudio)
+            $idIdiomaAudio='and idIdiomaAudio in (';
+        else
+            $idIdiomaAudio = '';
         foreach($idiomasAudio as $idiomaAudio) {
             if($idiomaAudio->getIdIdiomaAudio() == 0) {
                 //Está seleccionada la opción cualquiera

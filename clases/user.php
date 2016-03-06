@@ -432,4 +432,32 @@ class User {
         
         return $resultado;
     }
+    
+    /**
+     * Devuelve todos los usuarios.
+     * @param boolean $ordenadas
+     * @return array
+     */
+    public static function listar($ordenadas=FALSE) {
+        $resultado['error']=ERROR_GENERICO;
+
+        try {
+            $db=new DB();
+            $datos=$db->obtainData('select * from at_user');
+            if($datos['rows'] > 0) {
+                $resultado['error']=ERROR_NO_ERROR;
+                if($ordenadas)
+                    foreach($datos['data'] as $dato)
+                        $resultado['usuarios'][$dato['idUser']]=new User($dato['idUser'], $dato['email'], $dato['pass'], $dato['usuario'], $dato['idFacebook']);
+                else
+                    foreach($datos['data'] as $dato)
+                        $resultado['usuarios'][]=new User($dato['idUser'], $dato['email'], $dato['pass'], $dato['usuario'], $dato['idFacebook']);
+            }
+        }
+        catch(Exception $ex) {
+            $resultado['error']=ERROR_GENERICO;
+        }
+        
+        return $resultado;
+    }
 }
