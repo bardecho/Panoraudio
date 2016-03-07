@@ -877,11 +877,7 @@ class Ajax {
             $BDPreparadaRutas = Ruta::cargarPreparada();
             //Usuarios
             $usuarios = User::listar(true);
-            foreach($usuarios['usuarios'] as $usuario) {
-                $resultado['usuarios'][] = array('idUsuario' => $usuario->getIdUser(), 
-                    'email' => $usuario->getEmail(), 'idFacebook' => $usuario->getIdFacebook(), 
-                    'usuario' => $usuario->getUsuario());
-            }
+            $resultado['usuarios'] = array();
             
             foreach ($audios as $audio) {
                 //Para distribuir los audios en distintos servidores se pueden ir alternando aquí
@@ -893,7 +889,19 @@ class Ajax {
                     foreach($comentarios as $comentario) {
                         $comentariosFormateados[] = array('idComentario' => $comentario->getIdComentario(), 
                             'idUsuario' => $comentario->getIdUser(), 'texto' => $comentario->getTexto());
+                        
+                        if(!isset($resultado['usuarios'][$comentario->getIdUser()])) {
+                            $resultado['usuarios'][$comentario->getIdUser()] = $this->formatearUsuario($usuarios['usuarios'][$comentario->getIdUser()]);
+                        }
                     }
+                }
+                                
+                if(!isset($resultado['usuarios'][$audio->getIdUser()])) {
+                    $resultado['usuarios'][$audio->getIdUser()] = $this->formatearUsuario($usuarios['usuarios'][$audio->getIdUser()]);
+                }
+                $tieneFondo = is_file('img/fondos/' . $audio->getIdAudio() . '.jpg');
+                if($tieneFondo) {
+                    $resultado['usuarios'][$audio->getIdUser()]['fotos'][] = $audio->getIdAudio();
                 }
 
                 $resultado['marcadores'][] = array('id' => $audio->getIdAudio(), 
@@ -901,7 +909,7 @@ class Ajax {
                     'positivos' => $audio->getPuntosPositivos(), 'negativos' => $audio->getPuntosNegativos(),
                     'categoria' => $audio->getCategoria()->getIdCategoria(), 
                     'marca' => $audio->getMarca(), 'descripcion' => convertirURL($audio->getDescripcion()), 
-                    'descargas' => $audio->getDescargas(), 'fondo' => is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), 
+                    'descargas' => $audio->getDescargas(), 'fondo' => $tieneFondo, 
                     'rutas' => Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
                     'idUser' => $audio->getIdUser(), 'idArea' => (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), 
                     'nombreArea' => (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
@@ -913,9 +921,21 @@ class Ajax {
                         array()), 'comentarios' => $comentariosFormateados);
             }
 
+            $resultado['usuarios'] = array_values($resultado['usuarios']);
             $resultado['ok'] = TRUE;
         }
 
         echo json_encode($resultado);
+    }
+    
+    /**
+     * Devuelve el usuario para enviar por json.
+     * @param User $usuario
+     * @return array
+     */
+    private function formatearUsuario($usuario) {
+        return array('idUsuario' => $usuario->getIdUser(), 
+                'email' => $usuario->getEmail(), 'idFacebook' => $usuario->getIdFacebook(), 
+                'usuario' => $usuario->getUsuario(), 'fotos' => array());
     }
 }
