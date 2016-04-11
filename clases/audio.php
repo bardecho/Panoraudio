@@ -641,14 +641,13 @@ class Audio {
      * @param int $tipoDenuncia 
      * @return boolean
      */
-    public static function marcarInapropiado($idAudio, $tipoDenuncia) {
+    public static function marcarInapropiado($idAudio, $tipoDenuncia, $idUser) {
         $resultado=FALSE;
-        $user=comprobarLogin();
-        
+
         try {
             $db=new DB();
             $idAudio=intval($idAudio);
-            $idUser=intval($user->getIdUser());
+            $idUser=intval($idUser);
             $tipoDenuncia = intval($tipoDenuncia);
             
             $datos=$db->alterData("replace into at_inapropiado (idAudio, idUser, tipoDenuncia) values ($idAudio, $idUser, $tipoDenuncia)");

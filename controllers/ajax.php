@@ -264,19 +264,48 @@ class Ajax {
         $resultado['ok'] = FALSE;
 
         $user = comprobarLogin();
-        if ($user) {
-            $resultado['ok'] = Audio::borrar($idAudio);
+        if(!$user) {
+            if(post('entrar_email') && post('entrar_pass')) {
+                $user = User::login(post('entrar_email'), post('entrar_pass'));
+                $user = $user['user'];
+            }
+            elseif(post('facebookID')) {
+                $user=User::loginFacebook(post('facebookID'));
+                $user = $user['user'];
+                if($user->getUsuario() && $user->getUsuario() != post('facebookName')) {
+                    $user = false;
+                }
+            }
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        if ($user) {
+            $audio = Audio::cargar($idAudio);
+            $resultado['ok'] = $audio->borradoCompleto();
+        }
+
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     public function marcarInapropiado($idAudio, $tipoDenuncia) {
         $resultado['ok'] = FALSE;
 
         $user = comprobarLogin();
+        if(!$user) {
+            if(post('entrar_email') && post('entrar_pass')) {
+                $user = User::login(post('entrar_email'), post('entrar_pass'));
+                $user = $user['user'];
+            }
+            elseif(post('facebookID')) {
+                $user=User::loginFacebook(post('facebookID'));
+                $user = $user['user'];
+                if($user && $user->getUsuario() && $user->getUsuario() != post('facebookName')) {
+                    $user = false;
+                }
+            }
+        }
+        
         if ($user) {
-            $resultado['ok'] = Audio::marcarInapropiado($idAudio, $tipoDenuncia);
+            $resultado['ok'] = Audio::marcarInapropiado($idAudio, $tipoDenuncia, $user->getIdUser());
             
             $mensaje = cargarPlantillaEmail('inapropiado');
             if ($mensaje) {
@@ -304,7 +333,7 @@ class Ajax {
             }
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     /**
