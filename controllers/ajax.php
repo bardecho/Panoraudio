@@ -967,4 +967,12 @@ class Ajax {
                 'email' => $usuario->getEmail(), 'idFacebook' => $usuario->getIdFacebook(), 
                 'usuario' => $usuario->getUsuario(), 'fotos' => array());
     }
+    
+    public function obtenerLocalizaciones() {
+        $_POST['idIdiomaAudio'] = 7;
+        
+        $resultado = Audio::obtenerLocalizaciones(post('idIdiomaAudio'), post('idsCategorias'));
+
+        echo json_encode($resultado);
+    }
 }

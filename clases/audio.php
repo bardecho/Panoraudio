@@ -973,4 +973,37 @@ class Audio {
         
         return $resultado;
     }
+    
+    /**
+     * Devuelve el id y la localización de los puntos.
+     * @param int $idIdiomaAudio
+     * @param int[] $idsCategorias
+     * @return array
+     */
+    public static function obtenerLocalizaciones($idIdiomaAudio, $idsCategorias = array()) {
+        $resultado = array();
+        
+        //Concatenamos las categorías
+        $idCat='';
+        if($idsCategorias) {
+            $idCat='and idCategoria in (';
+            foreach($idsCategorias as $idCategoria) {
+                $idCat .= (int)$idCategoria.', ';
+            }
+            $idCat=substr($idCat, 0, -2).')';
+        }
+        
+        $idIdiomaAudio = (int)$idIdiomaAudio;
+        
+        try {
+            $db=new DB();
+            $datos=$db->obtainData("select idAudio, latitud, longitud from at_audio where marca=0 $idCat and idIdiomaAudio = $idIdiomaAudio and bloqueado=0");
+            if($datos['rows'] > 0) {
+                $resultado = $datos['data'];
+            }
+        }
+        catch(Exception $ex) { }
+        
+        return $resultado;
+    }
 }
