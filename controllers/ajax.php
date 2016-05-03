@@ -708,7 +708,7 @@ class Ajax {
         else
             $resultado['menu'] = "{$GLOBALS['errores'][ERROR_GENERICO]}";
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
     
     /**
