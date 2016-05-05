@@ -968,9 +968,10 @@ class Ajax {
                 'usuario' => $usuario->getUsuario(), 'fotos' => array());
     }
     
+    /**
+     * Devuelve el id y las coordenadas de los audios.
+     */
     public function obtenerLocalizaciones() {
-        $_POST['idIdiomaAudio'] = 7;
-        
         $resultado = Audio::obtenerLocalizaciones(post('idIdiomaAudio'), post('idsCategorias'));
 
         echo json_encode($resultado);
