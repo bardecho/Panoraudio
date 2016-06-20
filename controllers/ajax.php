@@ -333,7 +333,7 @@ class Ajax {
             }
         }
 
-        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
+        echo (post('objeto') ? ($resultado['ok'] ? 'true' : 'false') : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     /**
