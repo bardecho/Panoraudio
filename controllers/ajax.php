@@ -283,7 +283,7 @@ class Ajax {
             $resultado['ok'] = $audio->borradoCompleto();
         }
 
-        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
+        echo (post('objeto') ? (int)$resultado : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     public function marcarInapropiado($idAudio, $tipoDenuncia) {
