@@ -1,0 +1,1 @@
+¡{nombreSeguidor} te está siguiendo en Panoraudio!

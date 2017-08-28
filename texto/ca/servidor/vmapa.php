@@ -37,3 +37,6 @@ $GLOBALS['textos']['localizarse']='Localitza et al mapa';
 $GLOBALS['textos']['vistaLista']='Vista de llista';
 $GLOBALS['textos']['vistaMapa']='Vista del mapa';
 $GLOBALS['textos']['intercambiar']='Intercanviar entre foto i tipus categoria';
+$GLOBALS['textos']['seguiendo_titulo']='Algú et segueix a Panoraudio.';
+$GLOBALS['textos']['meGusta_titulo']='A algú li agrada un dels teus àudios.';
+$GLOBALS['textos']['nuevoAudio_titulo']='Un usuari de Panoraudio ha creat un nou àudio.';

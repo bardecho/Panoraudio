@@ -35,3 +35,5 @@ class TextoWiki implements Texto {
         return $contenido;
     }
 }
+
+?>

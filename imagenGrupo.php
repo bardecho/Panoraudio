@@ -13,18 +13,18 @@ if(isset($_GET['cantidad']) && (int)$_GET['cantidad']) {
         imageSaveAlpha($imgBase, true);
         $color = imagecolorallocate($imgBase, 30, 118, 238);
         if($cantidad > 99) {
-            $x = 27;
-            $y = 11;
+            $x = 11;
+            $y = 18;
             $size = 7;
         }
         elseif($cantidad > 9) {
-            $x = 27;
-            $y = 12;
+            $x = 12;
+            $y = 19;
             $size = 9;
         }
         else {
-            $x = 29;
-            $y = 12;
+            $x = 15;
+            $y = 19;
             $size = 10;
         }
         imagettftext($imgBase, $size, 0, $x, $y, $color, 'img/mplus-1m-regular.ttf', $cantidad);

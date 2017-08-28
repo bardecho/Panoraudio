@@ -16,7 +16,7 @@ VistaPerfil.prototype.dibujar = function() {
             "<div id='vistaPerfil_contenedor'>" + 
                 "<div id='vistaPerfil_cabecera'></div>" +
                 "<div id='vistaPerfil_datos'>" +
-                    "<p><img src='"+ base_url_img + "img/fotosPerfil/" + this.idUsuario + ".jpg' alt=''/> " + this.nombreUsuario + "</p>" +
+                    "<p><img id='fotoPerfil' src='"+ base_url_img + "img/fotosPerfil/" + this.idUsuario + ".jpg' alt=''/> " + this.nombreUsuario + "</p>" +
                     "<form action='" + cadenaConexion + "subirFotoPerfil' name='formuFotoPerfil' method='POST' enctype='multipart/form-data'>" +
                         "<input type='file' name='fotoPerfil' value='' accept='image/*'/>" +
                     "</form>" +
@@ -27,6 +27,10 @@ VistaPerfil.prototype.dibujar = function() {
             "</div>";
     
     $('body').append(html);
+    
+    $('#fotoPerfil').error(function() {
+        $(this).attr('src', base_url_img + 'img/marco-foto-vacio-63.png');
+    });
     
     this.generarCabecera();
     this.generarLista();
@@ -71,7 +75,7 @@ VistaPerfil.prototype.solicitarDatos = function(callback) {
     
     this.servidor.solicitarDatosPerfil(this.idUsuario, function(data) {
         if(data.ok) {
-            esto.datos = data.imagenes;
+            esto.datos = data;
         }
         
         callback(data.ok);
@@ -94,7 +98,7 @@ VistaPerfil.prototype.generarCabecera = function() {
     }
     else {
         //Generamos la cabecera según la cantidad de imágenes disponible
-        var imagenesDesordenadas = desordenarLista(esto.datos, 7);
+        var imagenesDesordenadas = desordenarLista(esto.datos.imagenes, 7);
         $('#vistaPerfil_cabecera').html(VistaPerfil.cabeceras[imagenesDesordenadas.length]);
         if(imagenesDesordenadas.length > 0) {
             var i = 0;
@@ -116,6 +120,37 @@ VistaPerfil.prototype.generarCabecera = function() {
                 i++;
             });
         }
+        
+        function crearBotonSeguir() {
+            $('#fotoPerfil').parent().append("<img class='seguir' src='"+ base_url_img + "img/seguir.png' alt=''/>");
+            $('.seguir').click(function() {
+                esto.servidor.modificarSeguir(function() {
+                    $('.seguir').remove();
+                    crearBotonNoSeguir();
+                }, 1, esto.idUsuario);
+            });
+        }
+        
+        function crearBotonNoSeguir() {
+            $('#fotoPerfil').parent().append("<img class='noSeguir' src='"+ base_url_img + "img/noSeguir.png' alt=''/>");
+            $('.noSeguir').click(function() {
+                esto.servidor.modificarSeguir(function() {
+                    $('.noSeguir').remove();
+                    crearBotonSeguir();
+                }, 0, esto.idUsuario);
+            });
+        }
+
+        //Ponemos el botón seguir o dejar de seguir
+        if(this.usuarioActual && this.usuarioActual != this.nombreUsuario) {
+            if(esto.datos.siguiendo) {
+                crearBotonNoSeguir();
+            }
+            else {
+                crearBotonSeguir();
+            }
+        }
+    
     }
 };
 
@@ -173,13 +208,13 @@ VistaPerfil.prototype.generarLista = function() {
                 '<section id="least">' +
                     '<div class="least-preview"></div>' +
                     '<ul class="least-gallery">';
-        for(var x in esto.datos) {
+        for(var x in esto.datos.imagenes) {
             html += 
                 '<li>' +
-                    '<a href="' + base_url_img + 'img/fondos/' + esto.datos[x].idAudio + '.jpg" ' +
-                    'title="Votos: ' + esto.datos[x].puntuacion + '" ' +
-                    'data-subtitle="Comentarios: ' + esto.datos[x].cantidadComentarios + '" >' +
-                        '<img id="' + esto.datos[x].idAudio + '_foto" src="' + base_url_img + 'img/fondos/' + esto.datos[x].idAudio + '_mini.jpg" alt="" />' +
+                    '<a href="' + base_url_img + 'img/fondos/' + esto.datos.imagenes[x].idAudio + '.jpg" ' +
+                    'title="Votos: ' + esto.datos.imagenes[x].puntuacion + '" ' +
+                    'data-subtitle="Comentarios: ' + esto.datos.imagenes[x].cantidadComentarios + '" >' +
+                        '<img id="' + esto.datos.imagenes[x].idAudio + '_foto" src="' + base_url_img + 'img/fondos/' + esto.datos.imagenes[x].idAudio + '_mini.jpg" alt="" />' +
                     '</a>' +
                 '</li>';
         }

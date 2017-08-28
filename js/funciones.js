@@ -375,7 +375,7 @@ function crearMenuLateral() {
                     '</select>' + 
                 '</div>' + 
             '<div>' + 
-            '<p><a href="http://panoraudio.net" target="_blank"><img src="' + base_url_img + 'img/marca-unitaria-icon.png" alt="' + textos['acercaDe'] + '"/>' + textos['acercaDe'] + '</a></p>' + 
+            '<p><a href="http://web.panoraudio.com" target="_blank"><img src="' + base_url_img + 'img/marca-unitaria-icon.png" alt="' + textos['acercaDe'] + '"/>' + textos['acercaDe'] + '</a></p>' + 
             '<p><a href="mailto:contact@panoraudio.com"><img src="' + base_url_img + 'img/mail-icon-hover-53.png" alt="' + textos['contacto'] +'"/>' + textos['contacto'] +'</a></p>' + 
         '</div>' + 
         '<div>' + 
@@ -532,7 +532,7 @@ function logueoFacebook(selector) {
                 fbPulsado = true;
 
                 FB.login(function(response) {}, {
-                    scope: 'basic_info'
+                    scope: 'basic_info,email'
                 }); 
             }
         });

@@ -19,7 +19,7 @@ class DB {
      */
     private function connect() {
         $this->connection=mysqli_init();
-        if(@$this->connection->real_connect('localhost', 'u794556428_audio', 'Indianajones80', 'audioTwytter')) {
+        if(@$this->connection->real_connect('localhost', 'u794556428_audio', 'Indianajones80', 'u794556428_audio')) {
             $this->connection->set_charset('utf8');
         }
         else {

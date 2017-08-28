@@ -1,0 +1,1 @@
+A {nombreSeguidor} le gusta tu audio: {audio}

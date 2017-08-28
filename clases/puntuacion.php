@@ -61,7 +61,7 @@ class Puntuacion {
     /**
      * Carga una puntuación a partir de un idAudio.
      * @param int $idAudio El id del audio del que se desea la puntuación.
-     * @return boolean TRUE en caso correcto o FALSE en caso de error.
+     * @return Puntuacion[] FALSE en caso de error.
      */
     public static function cargar($idAudio) {
         $idAudio=intval($idAudio);

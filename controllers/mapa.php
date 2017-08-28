@@ -14,7 +14,7 @@ class Mapa {
     
     public function __construct() {
         $this->js= '
-                <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+                <script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=true&key=AIzaSyBUp8PEc8UoC0Lj3dxMzNBC7VOConk4WVo"></script>
                 <script type="text/javascript" src="'.BASE_URL.'texto/'.$_SESSION['idioma'].'/cliente/vacceso.js"></script>
                 <script type="text/javascript" src="'.BASE_URL.'texto/'.$_SESSION['idioma'].'/cliente/vmapa.js"></script>
                 <script type="text/javascript" src="'.BASE_URL.'js/vclases.js"></script>
@@ -186,8 +186,13 @@ class Mapa {
                     limitImageSize($_FILES['fondo']['tmp_name'], $_FILES['fondo']['name'], 500, 200, 80, FALSE, FALSE, "img/fondos/{$idAudio}_mini.jpg");
                 }
 
-                if($error != 'correcto')
+                if($error != 'correcto') {
                     Audio::borrar($audio->getIdAudio());
+                }
+                else {
+                    //Enviar email a los seguidores
+                    
+                }
 
                 $this->enviarCodigoApp(($error == 'correcto' ? $audio->getIdAudio() : $error));
                 mostrar('vmensaje', array('mensaje' => mostrarMensajes(array($GLOBALS['textos'][$error]), BASE_URL.'index.php/mapa'), 'textoMensaje' => array($GLOBALS['textos'][$error])));

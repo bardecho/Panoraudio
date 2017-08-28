@@ -5,15 +5,16 @@
  * @author marcbardecho
  */
 class User {
-    private $idUser, $email, $pass, $usuario, $idFacebook, $usoFacebook;
+    private $idUser, $email, $pass, $usuario, $idFacebook, $usoFacebook, $firebase;
 
-    public function __construct($idUser, $email, $pass, $usuario, $idFacebook, $usoFacebook = FALSE) {
+    public function __construct($idUser, $email, $pass, $usuario, $idFacebook, $usoFacebook = FALSE, $firebase = '') {
         $this->setIdUser($idUser);
         $this->setEmail($email);
         $this->setPass($pass);
         $this->setUsuario($usuario);
         $this->setIdFacebook($idFacebook);
         $this->setUsoFacebook($usoFacebook);
+        $this->setFireBase($firebase);
     }
 
     /**
@@ -377,6 +378,14 @@ class User {
         return $result;
     }
     
+    public function getFireBase() {
+        return $this->firebase;
+    }
+    
+    public function setFireBase($firebase) {
+        $this->firebase = $firebase;
+    }
+    
     public function getIdFacebook() {
         return $this->idFacebook;
     }
@@ -460,4 +469,106 @@ class User {
         
         return $resultado;
     }
+    
+    /**
+     * Indica si el usuario actual está siguiendo al usuario indicado.
+     * @param User $idUsuario
+     * @return boolean
+     */
+    public function estaSiguiendoA($idUsuario) {
+        $idUsuario = (int)$idUsuario;
+        
+        $db = new DB();
+        $resultado = $db->obtainData("SELECT 1 FROM `at_seguimiento` WHERE idUserSeguido = '$idUsuario' AND idUserSeguidor = '$this->idUser'");
+        
+        return (boolean)$resultado['rows'];
+    }
+    
+    /**
+     * Cambia el estado de un seguimiento.
+     * @param boolean $seguir
+     * @param int $idUserSeguido
+     * @return boolean 
+     */
+    public function modificarSeguir($seguir, $idUserSeguido) {
+        $idUserSeguido = (int)$idUserSeguido;
+        $seguir = (boolean)$seguir;
+        
+        $db = new DB();
+        if($seguir) {
+            $resultado = $db->alterData("INSERT IGNORE `at_seguimiento` (idUserSeguido, idUserSeguidor) VALUES ('$idUserSeguido', '$this->idUser')");
+        }
+        else {
+            $resultado = $db->alterData("DELETE FROM `at_seguimiento` WHERE idUserSeguido = '$idUserSeguido' AND idUserSeguidor = '$this->idUser'");
+        }
+        
+        return (boolean)$resultado['rows'];
+    }
+    
+    /**
+     * Devuelve los ids de los usuarios que siguen a este.
+     * @return int[]
+     */
+    public function obtenerSeguidores() {
+        $db = new DB();
+        
+        $ids = array();
+        $usuarios = $db->obtainData("SELECT idUserSeguidor FROM `at_seguimiento` WHERE idUserSeguido = '$this->idUser'");
+        if($usuarios['rows']) {
+            foreach($usuarios['data'] as $usuario) {
+                $ids[] = $usuario['idUserSeguidor'];
+            }
+        }
+        
+        return $ids;
+    }
+    
+    /**
+     * Devuelve los ids de los usuarios que sigue este.
+     * @return int[]
+     */
+    public function obtenerSeguidos() {
+        $db = new DB();
+        
+        $ids = array();
+        $usuarios = $db->obtainData("SELECT idUserSeguido FROM `at_seguimiento` WHERE idUserSeguidor = '$this->idUser'");
+        if($usuarios['rows']) {
+            foreach($usuarios['data'] as $usuario) {
+                $ids[] = $usuario['idUserSeguido'];
+            }
+        }
+        
+        return $ids;
+    }
+    
+    /**
+     * Devuelve los ids de los audios votados positivamente.
+     * @return int[]
+     */
+    public function obtenerPuntuadosPositivos() {
+        $db = new DB();
+        
+        $ids = array();
+        $audios = $db->obtainData("SELECT idAudio FROM `at_puntuacion` WHERE idUser = '$this->idUser' AND puntuacion > 0");
+        if($audios['rows']) {
+            foreach($audios['data'] as $audio) {
+                $ids[] = $audio['idAudio'];
+            }
+        }
+        
+        return $ids;
+    }
+    
+    /**
+     * Graba un cambio en el código de firebase.
+     * @return boolean
+     */
+    public function actualizarFireBase() {
+        $db = new DB();
+        $firebase = $db->escapeData(array($this->firebase));
+        $resultado = $db->alterData("UPDATE `at_user` SET firebase = '$firebase[0]'");
+        
+        return (boolean)$resultado['rows'];
+    }
 }
+

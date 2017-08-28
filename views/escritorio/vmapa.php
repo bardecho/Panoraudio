@@ -1,10 +1,16 @@
 <div id="cabecera">
     <img id="botonIdioma" src="<?php echo BASE_URL_IMG; ?>img/banderas/<?php echo $_SESSION['idioma']; ?>.png" alt="<?php echo $_SESSION['idioma']; ?>" title="<?php echo $_SESSION['idioma']; ?>"/>
-    <a href="http://panoraudio.net" target="_blank"><img src="<?php echo BASE_URL_IMG; ?>img/LOGO-panoraudio-32-contraste.png" alt="Panoraudio"/></a>
+    <a href="http://web.panoraudio.com" target="_blank"><img src="<?php echo BASE_URL_IMG; ?>img/LOGO-panoraudio-32-contraste.png" alt="Panoraudio"/></a>
     <input class="busqueda" type="text" name="textoBusqueda" value=""/>
     <?php
-    if(comprobarLogin()) {
-        echo "<img id='botonPerfil' src='".BASE_URL_IMG."img/perfil-icon.png' alt=''/>";
+    $usuario = comprobarLogin();
+    if($usuario) {
+        if(is_file("img/fotosPerfil/{$usuario->getIdUser()}.jpg")) {
+            echo "<img id='botonPerfil' src='".BASE_URL_IMG."img/perfil-icon.png' alt=''/>";
+        }
+        else {
+            echo "<img id='botonPerfil' src='".BASE_URL_IMG."img/perfil-icon-notificacion.png' alt=''/>";
+        }
     }
     else {
         echo "<span id='botonRegistroVentana' class='boton'>{$GLOBALS['textos']['registrar']}</span>";
@@ -14,11 +20,12 @@
     <a href="https://twitter.com/panoraudio" target="_blank"><img src="<?php echo BASE_URL_IMG; ?>img/twitter-icon.png" alt="Twitter"/></a>
     <a href="https://www.facebook.com/pages/Panoraudiocom/457862144254026" target="_blank"><img src="<?php echo BASE_URL_IMG; ?>img/facebook-icon.png" alt="Facebook"/></a>
     <div id="contacto">
-        <a href="mailto:contact@panoraudio.com">
+        <a href="http://web.panoraudio.com/#contact-scroll">
             <img src="<?php echo BASE_URL_IMG; ?>img/mail-icon-hover-53.png" alt="<?php echo $GLOBALS['textos']['contacta']; ?>"/>
             <p><?php echo $GLOBALS['textos']['contacta']; ?></p>
         </a>
     </div>
+    <a href="<?php echo BASE_URL; ?>"><img src="<?php echo BASE_URL_IMG; ?>img/flecha-ayuda-2.png" alt="Twitter"/></a>
 </div>
 
 <div id="contenedorMapa">

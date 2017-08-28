@@ -1,7 +1,7 @@
 <?php
 //Configuración
-ini_set('display_errors', 1);
-ini_set('log_errors', 'log/errores');
+ini_set('display_errors', 0);
+//ini_set('log_errors', 'log/errores');
 //Constantes
 define('FROM_NAME', 'Panoraudio');
 define('FROM_EMAIL', 'contact@panoraudio.com');
@@ -10,7 +10,7 @@ define('BASE_URL_IMG', 'http://localhost/tellme/'); //FALTA SSL
 define('BASE_URL_AUDIO', 'http://localhost/tellme/'); //FALTA SSL
 define('CONTROLADOR_INICIAL', 'mapa');
 define('AUDIO_MAX', 8000000);
-define('DOMINIO_COOKIE', 'localhost');
+define('DOMINIO_COOKIE', 'app.panoraudio.com');
 //Los errores
 define('ERROR_NO_ERROR', 0);
 define('ERROR_GENERICO', 1);

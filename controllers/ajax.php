@@ -7,6 +7,7 @@ require_once 'clases/preferencia.php';
 require_once 'clases/ruta.php';
 require_once 'clases/Comentario.php';
 require_once 'clases/area.php';
+require_once 'clases/CachePuntos.php';
 require_once 'utils/correcciones.php';
 require_once 'utils/rehash_helper.php';
 require_once 'utils/limitimagesize_helper.php';
@@ -27,6 +28,8 @@ class Ajax {
 
     public function obtenerAudios() {
         $resultado['ok'] = FALSE;
+        
+        $objeto = post('objeto');
 
         $idiomasAudio = array(cargarIdiomaAudio()); //Este sistema tiene preferencia sobre el de la bd
         $user = comprobarLogin();
@@ -71,6 +74,8 @@ class Ajax {
         }
 
         if ($audios) {
+            $cache = new CachePuntos();
+            
             //Cargamos las areas
             $areas = Area::listar(TRUE);
             //Vamos a cargar los nombres de usuario de los dueños de los audios
@@ -78,56 +83,63 @@ class Ajax {
             //Y los ids de ruta
             $BDPreparadaRutas = Ruta::cargarPreparada();
             foreach ($audios as $audio) {
-                $usuario = User::ejecutarPreparada($BDPreparada, $audio->getIdUser());
-                if ($usuario) {
-                    $idUser = $usuario->getIdUser();
-                    $nombreUser = $usuario->getUsuario();
-                }
-                else {
-                    $idUser = 0;
-                    $nombreUser = '';
-                }
-                //Para distribuir los audios en distintos servidores se pueden ir alternando aquí
-                $ruta = $audio->getArchivo(); //Le quité la ruta para reducir el consumo de ancho de banda
+                $audioCargado = $cache->cargarPunto($audio->getIdAudio(), $objeto);
+                if(!$audioCargado) {
+                    $usuario = User::ejecutarPreparada($BDPreparada, $audio->getIdUser());
+                    if ($usuario) {
+                        $idUser = $usuario->getIdUser();
+                        $nombreUser = $usuario->getUsuario();
+                    }
+                    else {
+                        $idUser = 0;
+                        $nombreUser = '';
+                    }
+                    //Para distribuir los audios en distintos servidores se pueden ir alternando aquí
+                    $ruta = $audio->getArchivo(); //Le quité la ruta para reducir el consumo de ancho de banda
 
-                if(post('objeto')) {
-                    $resultado['marcadores'][] = array('id' => $audio->getIdAudio(), 
-                        'la' => $audio->getLatitud(), 'lo' => $audio->getLongitud(), 'ruta' => $ruta, 
-                        'positivos' => $audio->getPuntosPositivos(), 'negativos' => $audio->getPuntosNegativos(),
-                        'categoria' => $audio->getCategoria()->getIdCategoria(), 'user' => $nombreUser, 
-                        'marca' => $audio->getMarca(), 'descripcion' => convertirURL($audio->getDescripcion()), 
-                        'descargas' => $audio->getDescargas(), 'fondo' => is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), 
-                        'rutas' => Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
-                        'idUser' => $idUser, 'idArea' => (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), 
-                        'nombreArea' => (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
-                        'limitesArea' => (isset($areas[$audio->getIdArea()]) ? 
-                            array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
-                                $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
-                                $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
-                                $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
-                            array()));
+                    if($objeto) {
+                        $audioCargado = array('id' => $audio->getIdAudio(), 
+                            'la' => $audio->getLatitud(), 'lo' => $audio->getLongitud(), 'ruta' => $ruta, 
+                            'positivos' => $audio->getPuntosPositivos(), 'negativos' => $audio->getPuntosNegativos(),
+                            'categoria' => $audio->getCategoria()->getIdCategoria(), 'user' => $nombreUser, 
+                            'marca' => $audio->getMarca(), 'descripcion' => convertirURL($audio->getDescripcion()), 
+                            'descargas' => $audio->getDescargas(), 'fondo' => is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), 
+                            'rutas' => Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
+                            'idUser' => $idUser, 'idArea' => (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), 
+                            'nombreArea' => (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
+                            'limitesArea' => (isset($areas[$audio->getIdArea()]) ? 
+                                array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
+                                    $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
+                                    $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
+                                    $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
+                                array()));
+                    }
+                    else {
+                        //'id', 'la', 'lo', 'ruta', 'positivos', 'negativos', 'categoria', 'user', 'marca', 
+                        //'descripcion', 'descargas', 'fondo', 'rutas', 'idUser', 'idArea', 'nombreArea', 'limitesArea'
+                        $audioCargado = array($audio->getIdAudio(), $audio->getLatitud(),
+                            $audio->getLongitud(), $ruta, $audio->getPuntosPositivos(), $audio->getPuntosNegativos(),
+                            $audio->getCategoria()->getIdCategoria(), $nombreUser, $audio->getMarca(),
+                            convertirURL($audio->getDescripcion()), $audio->getDescargas(),
+                            is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
+                            $idUser, (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
+                            (isset($areas[$audio->getIdArea()]) ? 
+                                array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
+                                    $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
+                                    $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
+                                    $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
+                                array()));
+                    }
+                    
+                    $cache->grabarPunto($audio->getIdAudio(), $objeto, $audioCargado);
                 }
-                else {
-                    //'id', 'la', 'lo', 'ruta', 'positivos', 'negativos', 'categoria', 'user', 'marca', 
-                    //'descripcion', 'descargas', 'fondo', 'rutas', 'idUser', 'idArea', 'nombreArea', 'limitesArea'
-                    $resultado['marcadores'][] = array($audio->getIdAudio(), $audio->getLatitud(),
-                        $audio->getLongitud(), $ruta, $audio->getPuntosPositivos(), $audio->getPuntosNegativos(),
-                        $audio->getCategoria()->getIdCategoria(), $nombreUser, $audio->getMarca(),
-                        convertirURL($audio->getDescripcion()), $audio->getDescargas(),
-                        is_file('img/fondos/' . $audio->getIdAudio() . '.jpg'), Ruta::ejecutarPreparada($BDPreparadaRutas, $audio->getIdAudio()), 
-                        $idUser, (isset($areas[$audio->getIdArea()]) ? $audio->getIdArea() : ''), (isset($areas[$audio->getIdArea()]) ? $areas[$audio->getIdArea()]->getArea() : ''),
-                        (isset($areas[$audio->getIdArea()]) ? 
-                            array($areas[$audio->getIdArea()]->getLatitudIzquierdaInferior(), 
-                                $areas[$audio->getIdArea()]->getLongitudIzquierdaInferior(), 
-                                $areas[$audio->getIdArea()]->getLatitudDerechaSuperior(), 
-                                $areas[$audio->getIdArea()]->getLongitudDerechaSuperior()) : 
-                            array()));
-                }
+
+                $resultado['marcadores'][] = $audioCargado;
             }
 
             $resultado['ok'] = TRUE;
         }
-
+        
         echo (get('callback') ? get('callback') . '(' . json_encode($resultado) . ')' : json_encode($resultado));
     }
     
@@ -188,10 +200,23 @@ class Ajax {
 
         echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
-    
+   
     public function guardarComentario($idAudio, $texto) {
         $resultado['ok'] = FALSE;
         $usuario = comprobarLogin();
+        if(!$usuario) {
+            if(post('entrar_email') && post('entrar_pass')) {
+                $usuario = User::login(post('entrar_email'), post('entrar_pass'));
+                $usuario = $usuario['user'];
+            }
+            elseif(post('facebookID')) {
+                $usuario=User::loginFacebook(post('facebookID'));
+                $usuario = $usuario['user'];
+                if($usuario->getUsuario() && $usuario->getUsuario() != post('facebookName')) {
+                    $usuario = false;
+                }
+            }
+        }
 
         if ($usuario) {
             $comentario = new Comentario(0, $usuario->getIdUser(), $idAudio, $texto);
@@ -200,7 +225,7 @@ class Ajax {
             }
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     /**
@@ -253,8 +278,28 @@ class Ajax {
         if ($user) {
             $audio = new Audio(0, new Categoria($idCategoria, ''), $user->getIdUser(), '',
                             new IdiomaAudio($idIdiomaAudio, ''), $latitud, $longitud, 0, FALSE, 1, urldecode($descripcion));
-            if ($audio->grabar() == ERROR_NO_ERROR)
+            if ($audio->grabar() == ERROR_NO_ERROR) {
                 $resultado['ok'] = TRUE;
+                
+                //Avisamos a los seguidores
+                $seguidores = $user->obtenerSeguidores();
+                if($seguidores) {
+                    $mensaje = cargarPlantillaEmail('nuevoAudio');
+                    if($mensaje) {
+                        $consulta = User::cargarPreparada();
+                        foreach($seguidores as $seguidor) {
+                            $mensajeTemp = $mensaje;
+                            $usuarioSeguidor = User::ejecutarPreparada($consulta, $seguidor);
+                            if($usuarioSeguidor) {
+                                $mensajeTemp['mensaje'] = str_replace(array('{nombreSeguido}', '{audio}', '{baseUrl}', '{idAudio}'), array($user->getUsuario(), $audio->getDescripcion(), BASE_URL, $audio->getIdAudio()), $mensaje['mensaje']);
+                                $mensajeTemp['mensajeTexto'] = str_replace(array('{nombreSeguido}', '{audio}', '{baseUrl}', '{idAudio}'), array($user->getUsuario(), $audio->getDescripcion(), BASE_URL, $audio->getIdAudio()), $mensaje['mensajeTexto']);
+
+                                sendMail($usuarioSeguidor->getEmail(), FROM_NAME, FROM_EMAIL, $GLOBALS['textos']['nuevoAudio_titulo'], $mensaje['mensaje'], $mensaje['mensajeTexto']);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         echo get('callback') . '(' . json_encode($resultado) . ')';
@@ -306,6 +351,7 @@ class Ajax {
         
         if ($user) {
             $resultado['ok'] = Audio::marcarInapropiado($idAudio, $tipoDenuncia, $user->getIdUser());
+            $audio = Audio::cargar($idAudio);
             
             $mensaje = cargarPlantillaEmail('inapropiado');
             if ($mensaje) {
@@ -326,8 +372,8 @@ class Ajax {
                         $motivo = 'Desconocido';
                         break;
                 }
-                $mensaje['mensaje'] = str_replace(array('{url}', '{motivo}'), array(BASE_URL."?id=$idAudio", $motivo), $mensaje['mensaje']);
-                $mensaje['mensajeTexto'] = str_replace(array('{url}', '{motivo}'), array(BASE_URL."?id=$idAudio", $motivo), $mensaje['mensajeTexto']);
+                $mensaje['mensaje'] = str_replace(array('{url}', '{motivo}', '{audio}'), array(BASE_URL."?id=$idAudio", $motivo, $audio->getDescripcion()), $mensaje['mensaje']);
+                $mensaje['mensajeTexto'] = str_replace(array('{url}', '{motivo}', '{audio}'), array(BASE_URL."?id=$idAudio", $motivo, $audio->getDescripcion()), $mensaje['mensajeTexto']);
 
                 sendMail(FROM_EMAIL, FROM_NAME, FROM_EMAIL, 'Audio inapropiado', $mensaje['mensaje'], $mensaje['mensajeTexto']);
             }
@@ -346,6 +392,20 @@ class Ajax {
         $resultado['ok'] = FALSE;
 
         $user = comprobarLogin();
+        if(!$user) {
+            if(post('entrar_email') && post('entrar_pass')) {
+                $user = User::login(post('entrar_email'), post('entrar_pass'));
+                $user = $user['user'];
+            }
+            elseif(post('facebookID')) {
+                $user=User::loginFacebook(post('facebookID'));
+                $user = $user['user'];
+                if($user && $user->getUsuario() && $user->getUsuario() != post('facebookName')) {
+                    $user = false;
+                }
+            }
+        }
+        
         if ($idAudio && $puntos !== FALSE && $user && $this->puedeValorar($idAudio)) {
             $audio = Audio::cargar($idAudio);
 
@@ -356,16 +416,47 @@ class Ajax {
                     $audio = Audio::cargar($idAudio);
                     $resultado['puntosPositivos'] = $audio->getPuntosPositivos();
                     $resultado['puntosNegativos'] = $audio->getPuntosNegativos();
+                    
+                    //Actualizar caché
+                    $cache = new CachePuntos();
+                    $cache->actualizarPunto($idAudio, $resultado['puntosPositivos'], $resultado['puntosNegativos']);
+                    
+                    if($puntos) {
+                        $mensaje = cargarPlantillaEmail('meGusta');
+                        if($mensaje) {
+                            $consulta = User::cargarPreparada();
+                            $usuarioSeguido = User::ejecutarPreparada($consulta, $audio->getIdUser());
+                            if($usuarioSeguido) {
+                                $mensaje['mensaje'] = str_replace(array('{nombreSeguidor}', '{audio}', '{baseUrl}'), array($user->getUsuario(), $audio->getDescripcion(), $audio->getIdAudio()), $mensaje['mensaje']);
+                                $mensaje['mensajeTexto'] = str_replace(array('{nombreSeguidor}', '{audio}', '{baseUrl}'), array($user->getUsuario(), $audio->getDescripcion(), $audio->getIdAudio()), $mensaje['mensajeTexto']);
+
+                                sendMail($usuarioSeguido->getEmail(), FROM_NAME, FROM_EMAIL, $GLOBALS['textos']['meGusta_titulo'], $mensaje['mensaje'], $mensaje['mensajeTexto']);
+                            }
+                        }
+                    }
                 }
             }
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     //Comprobamos si no es el dueño o ya ha puntuado
     private function puedeValorar($idAudio) {
         $user = comprobarLogin();
+        if(!$user) {
+            if(post('entrar_email') && post('entrar_pass')) {
+                $user = User::login(post('entrar_email'), post('entrar_pass'));
+                $user = $user['user'];
+            }
+            elseif(post('facebookID')) {
+                $user=User::loginFacebook(post('facebookID'));
+                $user = $user['user'];
+                if($user && $user->getUsuario() && $user->getUsuario() != post('facebookName')) {
+                    $user = false;
+                }
+            }
+        }
         $resultado = FALSE;
 
         //¿Está loguado?
@@ -398,9 +489,13 @@ class Ajax {
         if ($idAudio && Audio::nuevaDescarga($idAudio)) {
             $resultado['ok'] = TRUE;
             $resultado['descargas'] = Audio::contarDescargas($idAudio);
+            
+            //Actualizar caché
+            $cache = new CachePuntos();
+            $cache->actualizarPunto($idAudio, FALSE, FALSE, $resultado['descargas']);
         }
 
-        echo get('callback') . '(' . json_encode($resultado) . ')';
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
     }
 
     //Devuelve las coordenadas de un audio
@@ -665,6 +760,7 @@ class Ajax {
      */
     public function obtenerDatosPerfil($idUser) {
         $resultado['ok'] = TRUE;
+        $resultado['siguiendo'] = FALSE;
         
         if($idUser) {
             $audios = Audio::cargarPorUsuario($idUser);
@@ -677,6 +773,11 @@ class Ajax {
                                 (isset($cantidadComentarios[$audio->getIdAudio()]) ? $cantidadComentarios[$audio->getIdAudio()] : 0));
                     }
                 }
+            }
+            
+            $usuarioLogueado = comprobarLogin();
+            if($usuarioLogueado) {
+                $resultado['siguiendo'] = $usuarioLogueado->estaSiguiendoA($idUser);
             }
         }
         else {
@@ -744,8 +845,17 @@ class Ajax {
         if ($idsAudio && $usuario) {
             $arrayIds = explode(',', $idsAudio);
             $ruta = new Ruta(0, '', $arrayIds, $usuario->getIdUser());
-            if ($ruta->grabar() == ERROR_NO_ERROR)
+            if ($ruta->grabar() == ERROR_NO_ERROR) {
                 $resultado['ok'] = TRUE;
+                
+                //Actualizar caché
+                $cache = new CachePuntos();
+                $BDPreparadaRutas = Ruta::cargarPreparada();
+                foreach($arrayIds as $idAudio) {
+                    $rutas = Ruta::ejecutarPreparada($BDPreparadaRutas, $idAudio);
+                    $cache->actualizarPunto($idAudio, FALSE, FALSE, FALSE, $rutas);
+                }
+            }
         }
 
         echo get('callback') . '(' . json_encode($resultado) . ')';
@@ -756,10 +866,28 @@ class Ajax {
         $usuario = comprobarLogin();
 
         if ($idsRuta && $usuario) {
+            $idsAudio = array();
             $arrayIds = explode(',', $idsRuta);
-            foreach ($arrayIds as $idRuta)
-                if (Ruta::borrar($idRuta))
+            foreach ($arrayIds as $idRuta) {
+                $ruta = Ruta::cargar($idRuta);
+                
+                if (Ruta::borrar($idRuta)) {
                     $resultado['ok'] = TRUE;
+                    
+                    if($ruta) {
+                        $idsAudio = array_merge($idsAudio, $ruta->getIdsAudio());
+                    }
+                }
+            }
+            
+            //Actualizamos la caché
+            if($idsAudio) {
+                $idsAudio = array_unique($idsAudio);
+                $cache = new CachePuntos();
+                foreach($idsAudio as $idAudio) {
+                    $cache->eliminarPunto($idAudio);
+                }
+            }
         }
 
         echo get('callback') . '(' . json_encode($resultado) . ')';
@@ -830,7 +958,7 @@ class Ajax {
         echo get('callback') . '(' . json_encode($resultado) . ')';
     }
     
-    public function obtenerInfoUsuario($idUsuario) {
+    public function obtenerInfoUsuario($idUsuario, $return = false) {
         $resultado['ok'] = TRUE;
         $resultado['datos'] = array();
         
@@ -849,10 +977,11 @@ class Ajax {
                                     'idUsuario' => $comentario->getIdUser(), 'texto' => $comentario->getTexto());
                             }
                         }
-                        
+
+                        list($ancho, $alto) = getimagesize('img/fondos/'.$audio->getIdAudio().'.jpg');
                         $resultado['datos']['audios'][] = array('idAudio' => $audio->getIdAudio(), 'puntosPositivos' => $audio->getPuntosPositivos(), 
                                 'cantidadComentarios' => (isset($cantidadComentarios[$audio->getIdAudio()]) ? $cantidadComentarios[$audio->getIdAudio()] : 0),
-                                'archivo' => $audio->getArchivo(), 'comentarios' => $comentariosFormateados);
+                                'archivo' => $audio->getArchivo(), 'comentarios' => $comentariosFormateados, 'ancho' => $ancho, 'alto' => $alto);
                     }
                 }
             }
@@ -869,7 +998,12 @@ class Ajax {
             $resultado['ok'] = FALSE;
         }
         
-        echo json_encode($resultado);
+        if($return) {
+            return $resultado;
+        }
+        else {
+            echo json_encode($resultado);
+        }
     }
     
     public function obtenerInformacionZona() {
@@ -975,5 +1109,126 @@ class Ajax {
         $resultado = Audio::obtenerLocalizaciones(post('idIdiomaAudio'), post('idsCategorias'));
 
         echo json_encode($resultado);
+    }
+    
+    /**
+     * Cambia el estado de un seguimiento.
+     * @param boolean $seguir
+     * @param int $idUserSeguido
+     */
+    public function modificarSeguir($seguir, $idUserSeguido) {
+        $resultado['ok'] = false;
+        
+        $usuario = comprobarLogin();
+        if(!$usuario) {
+            if(post('entrar_email') && post('entrar_pass')) {
+                $usuario = User::login(post('entrar_email'), post('entrar_pass'));
+                $usuario = $usuario['user'];
+            }
+            elseif(post('facebookID')) {
+                $usuario=User::loginFacebook(post('facebookID'));
+                $usuario = $usuario['user'];
+                if($usuario->getUsuario() && $usuario->getUsuario() != post('facebookName')) {
+                    $usuario = false;
+                }
+            }
+        }
+        
+        if($usuario) {
+            $resultado['ok'] = $usuario->modificarSeguir($seguir, $idUserSeguido);
+
+            $mensaje = cargarPlantillaEmail('siguiendo');
+            if($mensaje) {
+                $consulta = User::cargarPreparada();
+                $usuarioSeguido = User::ejecutarPreparada($consulta, $idUserSeguido);
+                if($usuarioSeguido) {
+                    $mensaje['mensaje'] = str_replace(array('{nombreSeguidor}'), array($usuario->getUsuario()), $mensaje['mensaje']);
+                    $mensaje['mensajeTexto'] = str_replace(array('{nombreSeguidor}'), array($usuario->getUsuario()), $mensaje['mensajeTexto']);
+
+                    sendMail($usuarioSeguido->getEmail(), FROM_NAME, FROM_EMAIL, $GLOBALS['textos']['seguiendo_titulo'], $mensaje['mensaje'], $mensaje['mensajeTexto']);
+                }
+            }
+        }
+
+        echo (post('objeto') ? json_encode($resultado) : get('callback') . '(' . json_encode($resultado) . ')');
+    }
+    
+    /**
+     * Devuelve información adicional sobre un audio.
+     * @param int $idAudio
+     */
+    public function obtenerDatosAmpliadosAudio($idAudio) {
+        $resultado = array('ok' => false, 'datos' => array());
+        
+        if($idAudio) {
+            $resultado['ok'] = true;
+            $usuariosPresentes = array();
+            
+            //Puntuaciones para el audio
+            $resultado['datos']['meGustas'] = array();
+            $puntuaciones = Puntuacion::cargar($idAudio);
+            if($puntuaciones) {
+                foreach($puntuaciones as $puntuacion) {
+                    if($puntuacion->getPuntuacion() > 0) {
+                        $resultado['datos']['meGustas'][] = $puntuacion->getIdUser();
+
+                        $usuariosPresentes[] = $puntuacion->getIdUser();
+                    }
+                }
+            }
+            
+            //Comentarios de un audio
+            $resultado['datos']['comentarios'] = array();
+            $comentarios = Comentario::cargarPorAudio($idAudio);
+            if($comentarios) {
+                foreach($comentarios as $comentario) {
+                    $resultado['datos']['comentarios'][] = array('idComentario' => $comentario->getIdComentario(), 
+                        'idUser' => $comentario->getIdUser(), 'texto' => $comentario->getTexto());
+
+                    $usuariosPresentes[] = $comentario->getIdUser();
+                }
+            }
+            
+            //Datos de usuario
+            $resultado['datos']['usuarios'] = array();
+            $usuariosPresentes = array_unique($usuariosPresentes);
+            foreach($usuariosPresentes as $usuarioPresente) {
+                $datosTemp = $this->obtenerInfoUsuario($usuarioPresente, true);
+                if($datosTemp['ok']) {
+                    $resultado['datos']['usuarios'][$usuarioPresente] = $datosTemp['datos'];
+                }
+            }
+        }
+        
+        echo json_encode($resultado);
+    }
+    
+    /**
+     * Devuelve varios datos sociales.
+     * @param int $idUser
+     */
+    public function obtenerDatosSociales($idUser) {
+        $datos = array('ok' => true);
+        
+        $preparada = User::cargarPreparada();
+        $usuario = User::ejecutarPreparada($preparada, $idUser);
+        if($usuario) {
+            $datos['seguidores'] = $usuario->obtenerSeguidores();
+            $datos['seguidos'] = $usuario->obtenerSeguidos();
+            $publicaciones = Audio::cargarPorUsuario($idUser);
+            if($publicaciones) {
+                foreach($publicaciones as $publicacion) {
+                    $datos['publicaciones'][] = $publicacion->getIdAudio();
+                }
+            }
+            else {
+                $datos['publicaciones'] = array();
+            }
+        }
+        else {
+            $datos['ok'] = false;
+        }
+        
+        echo json_encode($datos);
     }
 }

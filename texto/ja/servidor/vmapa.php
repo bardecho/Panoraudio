@@ -37,3 +37,6 @@ $GLOBALS['textos']['localizarse']='あなたが地図上に表示';
 $GLOBALS['textos']['vistaLista']='リストビュー';
 $GLOBALS['textos']['vistaMapa']='地図を表示する';
 $GLOBALS['textos']['intercambiar']='写真と型カテゴリの切り替え';
+$GLOBALS['textos']['seguiendo_titulo']='誰かがPanoraudioであなたに従います。';
+$GLOBALS['textos']['meGusta_titulo']='誰かがあなたのオーディオの1が好き。';
+$GLOBALS['textos']['nuevoAudio_titulo']='ユーザーPanoraudio新しいオーディオを作成しました。';

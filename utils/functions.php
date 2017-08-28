@@ -92,10 +92,10 @@ function sendMail($toEmail, $fromName, $fromEmail, $subject, $message, $messageT
     $mail->Host = 'localhost'; // Specify main and backup server
     $mail->SMTPAuth = true; // Enable SMTP authentication
     $mail->Username = 'contact@panoraudio.com'; // SMTP username
-    $mail->Password = 'indianajones7'; // SMTP password
+    $mail->Password = 'mCq47e3~'; // SMTP password
     $mail->SMTPSecure = 'tls'; // Enable encryption, 'ssl' also accepted
     
-    //$mail->IsMail();
+//    $mail->IsMail();
 
     $mail->From = $fromEmail;
     $mail->FromName = $fromName;
@@ -432,7 +432,7 @@ function tipoDispositivo() {
     }
     else {
         $resultado = 3;
-    }
+    } 
     
     return $resultado;
 }

@@ -11,3 +11,5 @@ interface Texto {
      */
     public function getTexto($url);
 }
+
+?>

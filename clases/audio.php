@@ -378,7 +378,7 @@ class Audio {
     /**
      * Carga los audios de un usuario.
      * @param int $idUsuario El id del usuario.
-     * @return array Un array de audios.
+     * @return Audio[] Un array de audios.
      */
     public static function cargarPorUsuario($idUsuario) {
         $resultado=FALSE;        

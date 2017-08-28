@@ -1332,3 +1332,8 @@ html, body, #contenedor {
     vertical-align: bottom;
     width: 25px;
 }
+
+#vistaPerfil_datos .noSeguir, #vistaPerfil_datos .seguir {
+    height: 50%;
+    margin-top: 1%;
+}

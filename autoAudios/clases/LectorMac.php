@@ -56,3 +56,5 @@ class LectorMac implements Lector {
        return $resultado;
    }
 }
+
+?>

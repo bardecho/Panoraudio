@@ -57,3 +57,5 @@ class LectorI implements Lector {
        return $resultado;
    }
 }
+
+?>

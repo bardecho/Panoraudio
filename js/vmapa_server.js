@@ -110,7 +110,7 @@ Tellmee_Servidor.prototype.solicitarDatosPerfil = function(idUsuario, callback) 
                     'cantidadComentarios': data.datos[x][2]});
             }
         
-            datosProcesados = {'ok': true, 'imagenes': imagenes };
+            datosProcesados = {'ok': true, 'imagenes': imagenes, 'siguiendo': data.siguiendo };
         }
         else
             datosProcesados = data;
@@ -249,5 +249,11 @@ Tellmee_Servidor.prototype.solicitarRecuperar = function(callback, email) {
 //Solicita cambiar la contraseña
 Tellmee_Servidor.prototype.cambiarPass = function(callback, nuevoPass) {
     $.getJSON(this.cadenaConexion + 'cambiarPass/' + nuevoPass + '?callback=?', callback).
+        error(function(data, texto, http) {});
+};
+
+//Solicita seguir o dejar de seguir
+Tellmee_Servidor.prototype.modificarSeguir = function(callback, seguir, idUsuario) {
+    $.getJSON(this.cadenaConexion + 'modificarSeguir/' + seguir + '/' + idUsuario + '?callback=?', callback).
         error(function(data, texto, http) {});
 };

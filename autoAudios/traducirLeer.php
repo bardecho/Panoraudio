@@ -31,3 +31,4 @@ var_dump($textoTraducido);
 }
 
 echo json_encode($resultado);
+?>

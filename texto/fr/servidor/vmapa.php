@@ -37,3 +37,6 @@ $GLOBALS['textos']['localizarse']='Localiser sur la carte que vous';
 $GLOBALS['textos']['vistaLista']='Liste';
 $GLOBALS['textos']['vistaMapa']='Carte';
 $GLOBALS['textos']['intercambiar']='La commutation entre photo et le type catégorie';
+$GLOBALS['textos']['seguiendo_titulo']='Quelqu\'un vous suit dans Panoraudio.';
+$GLOBALS['textos']['meGusta_titulo']='Quelqu\'un aime un de vos audios.';
+$GLOBALS['textos']['nuevoAudio_titulo']='Panoraudio un utilisateur que vous avez créé une nouvelle audio.';

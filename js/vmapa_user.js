@@ -1400,14 +1400,6 @@ function cerrarInfoAudioAleatorio(previa) {
         $('#slider').remove();
         $('audio').remove();
     }
-    
-    //Añado dinamicamente botón ayuda lo indexo y genero su comportamiento
-    if($('#help').length == 0) {
-        var ayuda = $('<img id="help" src="' + base_url_img + 'img/icono-ayuda.png" alt="' + textos['ayuda'] + '"/>');
-        $('#cabecera').append(ayuda);
-    
-        $('#help').click(mostrarAyuda);
-    }
 }
 
 function actualizarVisualizacionCategorias() {

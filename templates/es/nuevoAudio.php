@@ -19,9 +19,8 @@
         </div>
         
         <div style="max-width: 600px;margin: auto">
-            <h1 style="font-size: 27px;font-weight: 500;margin: 22px 0;">Invitación a Panoraudio</h1>
-            <p>Hola. Un usuario de Panoraudio quiere que te unas.</p>
-            {extraText}
+            <h1 style="font-size: 27px;font-weight: 500;margin: 22px 0;">¡{nombreSeguido} ha creado un nuevo audio en Panoraudio!</h1>
+            <p>El audio que ha creado es este: <a href="{baseUrl}index.php/mapa?id={idAudio}" target="_blank">{audio}</a></p>
 
             <div style="background-color: #ebebeb;margin-top: 40px;margin-bottom: 10px;padding: 20px;">
                 <p style="font-size: 17px;font-weight: 900;">Entérate de las novedades de Panoraudio en:</p>

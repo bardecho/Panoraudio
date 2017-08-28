@@ -12,3 +12,5 @@ interface Lector {
      */
     public function leer($texto, $idioma);
 }
+
+?>

@@ -38,7 +38,7 @@
     </div>
 
     <!-- <div id="botonesIzq">
-        <a href="http://panoraudio.net" target="_blank"><img src="<?php echo BASE_URL_IMG; ?>img/icono-IR-WEB-panoraudio-51.png" alt="Panoraudio web"/></a>
+        <a href="http://web.panoraudio.com" target="_blank"><img src="<?php echo BASE_URL_IMG; ?>img/icono-IR-WEB-panoraudio-51.png" alt="Panoraudio Info"/></a>
     </div> -->
 
     <div id="botonesDer">

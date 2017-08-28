@@ -37,3 +37,6 @@ $GLOBALS['textos']['localizarse']='在地圖上定位你';
 $GLOBALS['textos']['vistaLista']='列表視圖';
 $GLOBALS['textos']['vistaMapa']='查看地圖';
 $GLOBALS['textos']['intercambiar']='照片和類型類別之間切換';
+$GLOBALS['textos']['seguiendo_titulo']='有人跟著你的Panoraudio。';
+$GLOBALS['textos']['meGusta_titulo']='有人喜歡你的音頻之一。';
+$GLOBALS['textos']['nuevoAudio_titulo']='Panoraudio用戶已經創建了一個新的音頻。';

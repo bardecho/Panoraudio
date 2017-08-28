@@ -31,7 +31,7 @@ body {
 img {
   border: 0;
 }
-#vistaPerfil_imagenes{background-color:#1875D1}
+/*#vistaPerfil_imagenes{background-color:#1875D1}*/
 
 /* @end */
 /**
@@ -85,7 +85,7 @@ img {
   /* @group Smallimages */
 }
 #least .least-preview {
-  background-color: whitesmoke;
+  /*background-color: whitesmoke;*/
   border-bottom: 2px solid;
   border-color: #f1f0f0;
   padding: 50px 0;

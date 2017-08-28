@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
-        <title>Panoraudio | Smart Pictures of the World</title>
+        <title>Panoraudio - Sound Scapes of The World</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <meta name="application-name" content="Panoraudio"/>
         <meta name="author" content="Daniel Vázquez Cañedo y Fernando Javier Julián Freire"/>
-        <meta name="description" content="Create and share soundscapes all over the world."/>
+        <meta name="description" content="Create and share sound scapes all over the world."/>
         <meta name="keywords" content="smart pictures,interactive map,mapa sonoro,sound,map,audio photo,travel,sound,fotografía,viajes" />
-        <?php 
+<?php 
         if(isset($_GET['id']) && is_file("img/fondos/{$_GET['id']}_mini.jpg")) {
             echo '<meta property="og:image" content="'.BASE_URL_IMG.'img/fondos/'.$_GET['id'].'_mini.jpg">';
         }

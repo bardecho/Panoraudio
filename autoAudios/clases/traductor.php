@@ -12,3 +12,5 @@ interface Traductor {
      */
     public function traducirTexto($texto, $idioma);
 }
+
+?>

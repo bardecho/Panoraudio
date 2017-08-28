@@ -13,3 +13,4 @@ if(isset($_GET['url'])) {
 }
 
 echo $_GET['callback'].'('.json_encode($respuesta).')';
+?>

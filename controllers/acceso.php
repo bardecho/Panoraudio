@@ -59,6 +59,10 @@ class Acceso {
                 if($result['error'] == ERROR_NO_ERROR && !is_file("img/fotosPerfil/{$result['user']->getIdUser()}.jpg")) {
                     $this->obtenerFotoPerfilFacebook(post('facebookID'), $result['user']->getIdUser());
                 }
+
+		if($result['error'] == ERROR_NO_ERROR && !$result['user']->getUsuario()) {
+                    $result['user']->update(FALSE, FALSE, post('facebookName'));
+                }
             }
             else {
                 $config = array(
@@ -78,10 +82,10 @@ class Acceso {
                 }
 
                 if(is_a($result['user'], 'User')) {
-                    //Le añadimos el nombre de usuario
-                    if(!$result['user']->getUsuario()) {
+                    //Le añadimos el nombre de usuario y el email
+                    if(!$result['user']->getUsuario() || !$result['user']->getEmail()) {
                         $user_profile = $facebook->api('/me','GET');
-                        $result['user']->update(FALSE, FALSE, $user_profile['name']);
+                        $result['user']->update($user_profile['email'], FALSE, ($user_profile['name'] ? $user_profile['name'] : $user_profile['first_name']));
                     }
                 }
                             
@@ -95,6 +99,12 @@ class Acceso {
         }
 
         if($result['error'] == ERROR_NO_ERROR) {
+            //Guardamos firebase
+            if(post('firebase') && post('firebase') != $result['user']->getFireBase()) {
+                $result['user']->setFireBase(post('firebase'));
+                $result['user']->actualizarFireBase();
+            }
+            
             //Metemos al usuario en la sesión
             $_SESSION['user']=serialize($result['user']);
 
@@ -110,11 +120,55 @@ class Acceso {
             }*/
             //Directos al mapa
             
-            $this->enviarCodigoApp($result['user']->getIdUser());
+            //Descargas filtradas
+            $idiomasAudio = array(cargarIdiomaAudio()); //Este sistema tiene preferencia sobre el de la bd
+
+            $preferencia = Preferencia::cargar($result['user']->getIdUser());
+            $categorias = $preferencia['preferencia']->getCategoria();
+            if (!$idiomasAudio[0]) {
+                $idiomasAudio = $preferencia['preferencia']->getIdiomaAudio();
+            }
+            $puntuacionMinima = $preferencia['preferencia']->getPuntuacionMinima();
+
+            //Devolvemos todos los audios de las categorías
+            $categorias = Categoria::listar();
+            //Sobreescribimos el idioma si llega por post
+            if(post('idioma') !== FALSE) {
+                if (!post('idioma')) {
+                    $idiomasAudio = array(new IdiomaAudio(0, '', ''));
+                }
+                else {
+                    $idiomasAudio = array(IdiomaAudio::cargar(post('idioma')));
+                }
+            }
+
+            if(post('idArea')) {
+                //Por área
+                $audios = Audio::buscarPorIdZona($idiomasAudio[0], post('idArea'), 0, $categorias['categorias'], FALSE);
+            }
+            elseif(post('latSupDer') !== FALSE && post('lonSupDer') !== FALSE && post('latInfIzq') !== FALSE && post('lonInfIzq') !== FALSE) {
+                //Por coordenadas
+                $audios = Audio::buscarPorZona($idiomasAudio[0], post('latSupDer'), post('lonSupDer'), 
+                        post('latInfIzq'), post('lonInfIzq'), 0, $categorias['categorias'], FALSE);
+            }
+            else {
+                //Todos
+                $audios = Audio::listar($categorias['categorias'], $idiomasAudio, $puntuacionMinima);
+            }
+
+            $descargasAudios = array();
+            if ($audios) {
+                foreach($audios as $audio) {
+                    $descargasAudios[$audio->getIdAudio()] = $audio->getDescargas();
+                }
+            }
+
+            $this->enviarCodigoApp($result['user']->getIdUser(), array('seguidos' => $result['user']->obtenerSeguidos(), 'resultado' => $result['user']->getIdUser(), 
+                'audiosPositivos' => $result['user']->obtenerPuntuadosPositivos(), 'descargas' => $descargasAudios));
             redireccionar(BASE_URL.'index.php/mapa');
         }
         else {
-            $this->enviarCodigoApp(-($result['error']));
+            $this->enviarCodigoApp(array('seguidos' => array(), array('resultado' => -($result['error']))));
             mostrar('vmensaje', array('mensaje' => mostrarMensajes(errores($result['error']), BASE_URL.'index.php/mapa'), 'textoMensaje' => errores($result['error'])));
         }
     }
@@ -135,10 +189,16 @@ class Acceso {
     /**
      * Convierte un código de la aplicación a app.
      * @param mixed $codigoError
+     * @param array $codigoExtendido
      */
-    private function enviarCodigoApp($codigoError) {
+    private function enviarCodigoApp($codigoError, $codigoExtendido = array()) {
         if(post('enviarMensaje')) {
-            echo $codigoError;
+            if($codigoExtendido) {
+                echo json_encode($codigoExtendido);
+            }
+            else {
+                echo $codigoError;
+            }
             exit;
         }
     }

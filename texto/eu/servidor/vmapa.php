@@ -37,3 +37,6 @@ $GLOBALS['textos']['localizarse']='Aurkitu mapan duzu';
 $GLOBALS['textos']['vistaLista']='Zerrendaren ikuspegia';
 $GLOBALS['textos']['vistaMapa']='Mapan ikusi';
 $GLOBALS['textos']['intercambiar']='Argazki eta mota kategoria batetik bestera aldatzea';
+$GLOBALS['textos']['seguiendo_titulo']='Norbaitek jarraitzen duzu Panoraudio ere.';
+$GLOBALS['textos']['meGusta_titulo']='Norbaitek zure audioak bat gustuko.';
+$GLOBALS['textos']['nuevoAudio_titulo']='Erabiltzaile bat Panoraudio audio berri bat sortu duzu.';

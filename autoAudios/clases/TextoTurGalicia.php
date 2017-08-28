@@ -60,3 +60,5 @@ class TextoTurGalicia implements Texto {
         return $contenido;
     }
 }
+
+?>
