@@ -14,7 +14,7 @@ class BDPreparada {
      */
     public function __construct($consulta) {
         $this->conexion=mysqli_init();
-        if(@$this->conexion->real_connect('localhost', 'u794556428_audio', 'Indianajones80', 'u794556428_audio')) {
+        if(@$this->conexion->real_connect('localhost', '', '', 'panoraudio')) {
             $this->conexion->set_charset('utf8');
             $this->consulta=$this->conexion->prepare($consulta);
             if($this->consulta === FALSE) throw new Exception($this->conexion->error, $this->conexion->errno);

@@ -155,7 +155,7 @@ class Acceso {
                 //Todos
                 $audios = Audio::listar($categorias['categorias'], $idiomasAudio, $puntuacionMinima);
             }
-
+            
             $descargasAudios = array();
             if ($audios) {
                 foreach($audios as $audio) {

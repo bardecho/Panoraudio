@@ -1,7 +1,7 @@
-var cadenaConexion='http://localhost/tellme/index.php/ajax/';
-var base_url='http://localhost/tellme/';
-var base_url_img='http://localhost/tellme/';
-var base_url_audio='http://localhost/tellme/';
+var cadenaConexion='http://localhost/panoraudio/index.php/ajax/';
+var base_url='http://localhost/panoraudio/';
+var base_url_img='http://localhost/panoraudio/';
+var base_url_audio='http://localhost/panoraudio/';
 //Aquí se va a guardar temporalmente si el texto del input es del usuario
 var ayuda=new Array();
 //Y aquí las categorías que están activadas o desactivadas

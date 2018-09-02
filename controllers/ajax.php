@@ -1231,4 +1231,25 @@ class Ajax {
         
         echo json_encode($datos);
     }
+    
+    /**
+     * Envía un push a un móvil.
+     * @param string $destinatario
+     * @param string $titulo
+     * @param string $texto
+     * @return boolean
+     */
+    private function enviarPush($destinatario, $titulo, $texto) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json', 
+            'Authorization: key='.CLAVE_FIREBASE)); 
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(array('notification' => array('body' => $texto, 'title' => $titulo, 'sound' => 'default'), 'to' => $destinatario))); 
+        $respuesta = json_decode(curl_exec($ch), true);
+        curl_close($ch);
+        
+        return $respuesta['success'] > 0;
+    }
 }

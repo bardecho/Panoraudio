@@ -383,7 +383,7 @@ class User {
     }
     
     public function setFireBase($firebase) {
-        $this->firebase = $firebase;
+        $this->firebase = trim($firebase);
     }
     
     public function getIdFacebook() {
